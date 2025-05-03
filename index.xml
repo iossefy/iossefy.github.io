@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Youssef Hesham - Software, security and chess</title><link>https://youssefy.com/</link><description>Recent content on Youssef Hesham - Software, security and chess</description><language>en</language><managingEditor>youssef @[redacted] &amp;> /dev/null (Youssef Hesham)</managingEditor><copyright>Youssef Hesham</copyright><lastBuildDate>Sat, 03 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://youssefy.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Using mitmproxy instead of burpsuite? (exploring a blind sqli portswigger lab)</title><link>https://youssefy.com/blog/using-mitmproxy-instead-of-burpsuite-sqli/</link><category>mitmproxy</category><category>burpsuite</category><category>portswigger</category><category>blind sql injection</category><pubDate>Wed, 24 Aug 2022 01:00:00 +0000</pubDate><author>youssef @[redacted] &amp;> /dev/null</author><guid>https://youssefy.com/blog/using-mitmproxy-instead-of-burpsuite-sqli/</guid><description>&lt;p>&lt;span class="first-letter">P&lt;/span>ortSwigger made a powerful tool &lt;code>burpsuite&lt;/code> for performing security testing of
+web applications. in its community edition it includes tools like repeater,
+decoder/encoder, burp intruder which helps in modifying http requests and study
+its behaviour.&lt;/p>
+&lt;p>&lt;code>mitmproxy&lt;/code> is a free opensource interactive https proxy. its features includes
+intercepting HTTP &amp;amp; HTTPS requests, save http conversations for later replay
+analysis, make scripted changes for http traffic using python&lt;/p>
+&lt;p>for whatever reason, i will try using mitmproxy to solve a blind sql inejection
+vulnerability using mitmproxy. the lab description goes like.
+the goal here is to try to solve this challenge by using mitmproxy and not
+burpsuite, python scripting is permitted of course.&lt;/p></description></item><item><title>Arab Security Cyber WarGames 2022</title><link>https://youssefy.com/blog/arab-security-cyber-wargames-2022/</link><category>ctf</category><category>writeup</category><category>ascwg</category><pubDate>Mon, 08 Aug 2022 12:00:00 +0000</pubDate><author>youssef @[redacted] &amp;> /dev/null</author><guid>https://youssefy.com/blog/arab-security-cyber-wargames-2022/</guid><description>&lt;h3 id="osp-challenge">OSP Challenge&lt;/h3>
+&lt;blockquote>
+&lt;p>Have you heard of OTP? This is OSP (One Secret Password).&lt;/p>&lt;/blockquote>
+&lt;p>given an &lt;code>osp.py&lt;/code> that contains the following block of code.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ff79c6">from&lt;/span> Crypto.Util.number &lt;span style="color:#ff79c6">import&lt;/span> getPrime, long_to_bytes, bytes_to_long, isPrime
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ff79c6">from&lt;/span> string &lt;span style="color:#ff79c6">import&lt;/span> printable, ascii_letters
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ff79c6">from&lt;/span> secret &lt;span style="color:#ff79c6">import&lt;/span> FLAG
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ff79c6">import&lt;/span> os
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>secret &lt;span style="color:#ff79c6">=&lt;/span> os&lt;span style="color:#ff79c6">.&lt;/span>urandom(&lt;span style="color:#8be9fd;font-style:italic">len&lt;/span>(FLAG))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ff79c6">def&lt;/span> &lt;span style="color:#50fa7b">OSP&lt;/span>(plain, secret):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ff79c6">assert&lt;/span> &lt;span style="color:#8be9fd;font-style:italic">len&lt;/span>(plain) &lt;span style="color:#ff79c6">==&lt;/span> &lt;span style="color:#8be9fd;font-style:italic">len&lt;/span>(secret), &lt;span style="color:#f1fa8c">&amp;#39;The length has to be idenntical!&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ct &lt;span style="color:#ff79c6">=&lt;/span> []
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> p &lt;span style="color:#ff79c6">=&lt;/span> getPrime(&lt;span style="color:#bd93f9">256&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ff79c6">for&lt;/span> f, k &lt;span style="color:#ff79c6">in&lt;/span> &lt;span style="color:#8be9fd;font-style:italic">zip&lt;/span>(FLAG, secret):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ct&lt;span style="color:#ff79c6">.&lt;/span>append((f &lt;span style="color:#ff79c6">*&lt;/span> p &lt;span style="color:#ff79c6">+&lt;/span> k))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ff79c6">return&lt;/span> ct, p
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ct, p &lt;span style="color:#ff79c6">=&lt;/span> OSP(FLAG, secret)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8be9fd;font-style:italic">print&lt;/span>(ct)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And given a text file &lt;code>output.txt&lt;/code> that contains the flag encrypted:&lt;/p></description></item><item><title>First post</title><link>https://youssefy.com/blog/first-post/</link><category>misc</category><pubDate>Tue, 21 Dec 2021 12:00:00 +0000</pubDate><author>youssef @[redacted] &amp;> /dev/null</author><guid>https://youssefy.com/blog/first-post/</guid><description>&lt;p>Hi.&lt;/p>
+&lt;p>let&amp;rsquo;s talk about the website. i probably know what you are thinking
+about, &amp;ldquo;This website is ugly, looks like the websites from the 90s?&amp;rdquo;.&lt;/p>
+&lt;p>this website is designed to be minimal without sacrificing basic
+functionality. website is lightweight so it loads fast, fits on all
+your screens and looks the same in all of your browser. that&amp;rsquo;s good
+because users will not get distracted and take what they want and
+&lt;em>just go away&lt;/em>. &lt;small>plus i am not a web designer and i am bad with
+colors and that&amp;rsquo;s a reason why i choose it to be this way.&lt;/small>&lt;/p></description></item></channel></rss>

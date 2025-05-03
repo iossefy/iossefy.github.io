@@ -1,0 +1,523 @@
+/* your css here */
+
+@font-face {
+    font-family: 'Noto Serif Display';
+    src: URL('/ttf/NotoSerifDisplay.ttf') format('truetype');
+
+}
+
+@font-face {
+    font-family: 'Embelma One';
+    src: URL('/ttf/EmbelmaOne.ttf') format('truetype');
+}
+
+body {
+    /* font-family: 'Open Sans'; */
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+.first-letter {
+    font-family: "Noto Serif Display";
+    font-size: 4rem;
+    line-height: 3.9rem;
+    float: left;
+    margin-right: 1px;
+}
+
+.content .blog-post-title {
+    font-weight: 600 !important;
+}
+
+
+.profile-pic img {
+    /* opacity: 0.60; */
+    border-radius: 10px;;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border-style: none;
+    width: 120px;
+    float: left;
+    margin-right: 20px;
+}
+
+
+/* .not-found-title { */
+/*     font-weight: 600; */
+/* } */
+
+/* .header h1.name { */
+/* 	font-weight: 600; */
+/* 	font-size: 2.1875rem; */
+/* 	font-family: "Noto Serif"; */
+/* } */
+
+
+ul li {
+    margin-left: 0rem;
+}
+
+.nav li {
+    padding: 0 1rem 0 1rem;
+}
+
+
+/* ruins the responsiveness */
+/* .nav li { */
+/* 	padding: 0 2rem 0 2rem; */
+/* } */
+
+
+.header h1.name {
+    /* border: 2px solid; */
+    text-decoration: none;
+    margin-left: 25%;
+    margin-right: 25%;
+    /* font-family: Times; */
+    font-family: "Embelma One";
+    /* font-size: 2.5rem; */
+}
+
+/* add a border around the title */
+/* on screens that don't have much width*/
+/* i was testing if it looks any better if i*/
+/* add some border to if. it doesn't.*/
+/* @media (max-width: 548px) { */
+/* 	.header h1.name { */
+/* 		border: 2px solid; */
+/* 	} */
+/* } */
+
+.markdown.page-content {
+    font-size: 1.0625rem;
+    line-height: 2rem;
+}
+
+.markdown.blog-post-content {
+    font-size: 1.0625;
+    line-height: 2rem;
+}
+
+/* .content .blog-post-title { */
+/* 	font-family: "Roboto Mono"; */
+/* 	font-size: 2rem; */
+/* } */
+
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+
+.unix-cmd {
+    font-family: monospace;
+    font-size: 2rem;
+    text-align: right;
+    background-color: #000;
+    color: #d3d7cf;
+    float: left;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+    margin-left: 1.6rem;
+}
+
+
+.btn {
+    padding: 5px 30px;
+}
+
+.btn-outline {
+    color: inherit;
+    border-color: inherit;
+    padding: 5px 30px;
+}
+
+* {
+    color: #626d71;
+}
+
+
+div.highlight pre code {
+    color: #fff;
+}
+
+.header h1.name {
+    color: #2a3132;
+}
+
+
+body {
+    background-color: #fff;
+    color: #111;
+}
+
+
+.content h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: #353025;
+    margin-bottom: 1rem;
+}
+
+
+a {
+    color: #4d648d;
+    background-color: transparent;
+}
+
+
+a:active, a:hover {
+    outline-width: 0;
+}
+
+a:hover, a:focus {
+    color: #2f496e;
+    text-decoration: underline;
+}
+
+.nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #4d648d;
+    /* color: inherit; */
+    text-decoration: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+.nav-link:hover, .nav-link:focus {
+    color: #2f496e;
+}
+
+.nav-link.disabled {
+    color: #cdcdc0;
+    pointer-events: none;
+    cursor: default;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    color: #2a3132;
+}
+
+/* blockquote, */
+/* img, */
+/* video { */
+/* 	box-shadow: 2px 2px 15px #93a1a1; */
+/* } */
+
+/* /\* code, *\/ */
+/* blockquote { */
+/* 	background-color: #fff; */
+/* } */
+
+/* blockquote::before { */
+/* 	color: #ab2720; */
+/* } */
+
+a.dotted {
+    color: #586e75;
+}
+
+/* pre { */
+/* 	background-color: #eee8d5; */
+/* } */
+
+
+
+/* .content .markdown pre code { */
+/* 	color: #586e75; */
+/* 	background-color: #fdf6e3; */
+/* } */
+
+
+.content .markdown pre {
+    /* Hugo specific: consider using the 'highlight' shortcode */
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    line-height: 20px;
+    white-space: pre;
+    word-break: break-all;
+    word-wrap: break-word;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.content .markdown pre code, .content .markdown pre output {
+    /* enclosed by 4 backticks (````) */
+    padding: 0;
+    font-size: 0.75rem;
+    line-height: 20px;
+    border-radius: 0;
+}
+
+
+.content .meta {
+    font-weight: 400;
+    font-size: 1rem;
+    color: #8593ae;
+    margin-bottom: 10px;
+}
+
+.content .meta-data {
+    font-weight: 400;
+    font-size: 1rem;
+    color: #063852;
+    margin-bottom: 10px;
+}
+
+.content .meta-brief {
+    color: #1e656d;
+}
+
+.content .caption {
+    text-align: center;
+    margin-top: 10px;
+    color: #92aac7;
+    font-size: 0.9rem;
+}
+
+.figure-caption {
+    font-size: 0.875em;
+    color: #92aac7;
+}
+
+
+input {
+    background-color: inherit;
+    border-bottom: 1px dashed #8593ae;
+}
+
+code span {
+    color: #fff;
+}
+
+
+hr.footer-linebreak {
+    background: url('/img/svg/cat.svg') center/contain no-repeat;
+    border: none;
+    height: 5rem;
+    width: 100%;
+    opacity: 40%;
+
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* @media (prefers-color-scheme: dark) { */
+/*     * { */
+/* 	color: rgb(165, 158, 146); */
+/* 	scrollbar-color: #454a4d #202324; */
+/*     } */
+
+
+/*     div.highlight pre code { */
+/* 	color: #fff; */
+/*     } */
+
+
+/*     html, body { */
+/* 	border-color: #736b5e; */
+/*     } */
+
+/*     body { */
+/* 	color: rgb(221, 218, 214); */
+/* 	background: rgb(24, 26, 27); */
+/*     } */
+
+/*     pre, code { */
+/* 	background-color: #262626; */
+/*     } */
+
+/*     .date { */
+/* 	color: #BABABA; */
+/*     } */
+
+/*     hr { */
+/* 	background: #EBEBEB; */
+/*     } */
+
+/*     .header h1.name { */
+/* 	color: rgb(203, 198, 192); */
+/*     } */
+
+/*     .content h1, h2, h3, h4, h5, h6 { */
+/* 	font-weight: 600; */
+/* 	color: rgb(204, 199, 192); */
+/* 	margin-bottom: 1rem; */
+/*     } */
+
+/*     img,video { */
+/* 	border-radius: .9%; */
+/*     } */
+
+/*     a { */
+/* 	color: rgb(153, 184, 212); */
+/* 	text-decoration: underline; */
+/* 	background-color: transparent; */
+/*     } */
+
+/*     a:active, a:hover { */
+/* 	outline-width: 0; */
+/*     } */
+
+/*     a:hover, a:focus { */
+/* 	color: rgb(153, 184, 212); */
+/* 	text-decoration: underline; */
+/*     } */
+
+/*     .nav-link { */
+/* 	display: block; */
+/* 	padding: 0.5rem 1rem; */
+/* 	color: rgb(153, 184, 212); */
+/* 	/\* color: inherit; *\/ */
+/* 	text-decoration: none; */
+/* 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out; */
+/*     } */
+/*     .nav-link:hover, .nav-link:focus { */
+/* 	color: rgb(153, 184, 212); */
+
+/*     } */
+/*     .nav-link.disabled { */
+/* 	color: #6c757d; */
+/* 	pointer-events: none; */
+/* 	cursor: default; */
+/*     } */
+
+/*     pre, code { */
+/* 	font: 12px Consolas, Courier, monospace; */
+/* 	background-color: #121212; */
+/*     } */
+
+/*     .content .markdown code, .content .markdown pre { */
+/* 	font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
+/* 	background-color: rgb(24, 26, 27); */
+/*     } */
+
+/*     .content .markdown code { */
+/* 	/\* enclosed by single backtick (`) *\/ */
+/* 	color: rgb(200, 195, 188); */
+/* 	padding: .2em .4em; */
+/* 	margin: 0; */
+/* 	font-size: 1rem; */
+/* 	background-color: rgba(22, 25, 28, 0.05); */
+/* 	border-radius: 6px; */
+/*     } */
+
+/*     pre { */
+/* 	background-color: #121212; */
+/*     } */
+
+
+/*     /\* .content .markdown pre code { *\/ */
+/*     /\* 	color: #FDFDFD; *\/ */
+/*     /\* 	background-color: #121212; *\/ */
+/*     /\* } *\/ */
+
+
+/*     .content .markdown pre { */
+/* 	/\* Hugo specific: consider using the 'highlight' shortcode *\/ */
+/* 	display: block; */
+/* 	margin-top: 1rem; */
+/* 	margin-bottom: 2rem; */
+/* 	padding: 1rem; */
+/* 	line-height: 20px; */
+/* 	white-space: pre; */
+/* 	word-break: break-all; */
+/* 	word-wrap: break-word; */
+/* 	margin-left: 1.5rem; */
+/* 	margin-right: 1.5rem; */
+/* 	border: 1px solid #ddd; */
+/* 	border-radius: 6px; */
+/* 	border-color: rgb(58, 62, 65); */
+/*     } */
+
+/*     .content .markdown pre code, .content .markdown pre output { */
+/* 	/\* enclosed by 4 backticks (````) *\/ */
+/* 	padding: 0; */
+/* 	font-size: 0.75rem; */
+/* 	line-height: 20px; */
+/* 	border-radius: 0; */
+/*     } */
+
+/*     .content .markdown blockquote { */
+/* 	padding: 0.5rem 0.5rem; */
+/* 	margin-top: 1rem; */
+/* 	margin-bottom: 1rem; */
+/* 	color: rgb(155, 146, 133); */
+/* 	border-left: 0.25rem solid rgb(55, 60, 62); */
+/*     } */
+
+/*     .content .meta { */
+/* 	font-weight: 400; */
+/* 	font-size: 1rem; */
+/* 	color: rgb(204, 200, 193); */
+/* 	margin-bottom: 10px; */
+/*     } */
+
+/*     .content .meta-data { */
+/* 	font-weight: 400; */
+/* 	font-size: 1rem; */
+/* 	color: rgb(204, 200, 193); */
+/* 	margin-bottom: 10px; */
+/*     } */
+
+/*     .content .meta-brief { */
+/* 	color: rgb(139, 214, 223); */
+/*     } */
+
+/*     .content .caption { */
+/* 	text-align: center; */
+/* 	margin-top: 10px; */
+/* 	color: rgb(204, 200, 193); */
+/* 	font-size: 0.9rem; */
+/*     } */
+
+/*     .figure-caption { */
+/* 	font-size: 0.875em; */
+/* 	color: rgb(204, 200, 193); */
+/*     } */
+
+/*     .alert-outline  { border: 3px solid #e7e7e7; color: #fdfdfd} */
+
+/*     .btn-outline { */
+/* 	background-color: inherit; */
+/*     } */
+
+/*     input { */
+/* 	background-color: inherit; */
+/* 	border-bottom: 1px dashed #e7e7e7; */
+/*     } */
+
+
+/*     /\* aside { *\/ */
+/*     /\* 	box-shadow: inset 5px 0 5px -5px #35354c; *\/ */
+/*     /\* 	font-style: italic; *\/ */
+/*     /\* 	color:  rgb(139, 214, 223); *\/ */
+/*     /\* } *\/ */
+
+/*     /\* code highlighter specific *\/ */
+/*     div.highlight, pre code span { */
+/* 	color: #fff; */
+/*     } */
+/* } */
