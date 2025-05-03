@@ -21,7 +21,7 @@
 #################################################
 
 User-agent: *
-Sitemap: https://youssefy.com/sitemap.xml
+Sitemap: /sitemap.xml
 
 Disallow: /doc/$
 Disallow: /*.png$
