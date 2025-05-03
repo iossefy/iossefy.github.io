@@ -3,23 +3,23 @@ given an osp.py that contains the following block of code.
 from Crypto.Util.number import getPrime, long_to_bytes, bytes_to_long, isPrime from string import printable, ascii_letters from secret import FLAG import os secret = os.urandom(len(FLAG)) def OSP(plain, secret): assert len(plain) == len(secret), 'The length has to be idenntical!' ct = [] p = getPrime(256) for f, k in zip(FLAG, secret): ct.append((f * p + k)) return ct, p ct, p = OSP(FLAG, secret) print(ct) And given a text file output.txt that contains the flag encrypted:"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="blog"><meta property="article:published_time" content="2022-08-08T12:00:00+00:00"><meta property="article:modified_time" content="2022-08-08T12:00:00+00:00"><meta property="article:tag" content="Ctf"><meta property="article:tag" content="Writeup"><meta property="article:tag" content="Ascwg"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="Arab Security Cyber WarGames 2022"><meta name=twitter:description content="Youssef's personal website/Blog. tech, opinions and chess."><meta name=twitter:image content="/"><link rel=canonical href=/blog/arab-security-cyber-wargames-2022/><link rel=stylesheet href=/css/site.min.css><link rel=stylesheet href=/css/custom.css><link rel=apple-touch-icon sizes=180x180 href=/img/fav/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/img/fav/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/img/fav/favicon-16x16.png><link rel=manifest href=/img/fav/site.webmanifest><meta name=msapplication-TileColor content="#da532c"><meta name=theme-color content="#ffffff"></head><body><div class="mt-xl header"><header><div class=container><div class="row justify-content-center"><div class=col-auto><a href=/ style=display:contents><h1 class="name text-center">Youssef Hesham</h1></a></div></div><div class="row justify-content-center"><div class="nav justify-content-center"><ul><li class="nav-item justify-content-center mx-auto"><a class=nav-link href=/>~/</a></li><li class="nav-item justify-content-center mx-auto"><a class=nav-link href=/about>About</a></li><li class="nav-item justify-content-center mx-auto"><a class=nav-link href=https://github.com/iossefy>Github</a></li><li class="nav-item justify-content-center mx-auto"><a class=nav-link href=/index.xml>rss</a></li></ul></div></div></div></header></div><div class=content><div class=container><div class="row justify-content-center"><div class="col-sm-12 col-lg-8"><h1 class="mx-0 mx-md-4 blog-post-title">Arab Security Cyber WarGames 2022</h1><div class="meta-data meta"><span class="author meta-data" title="Youssef Hesham">Youssef Hesham
 </span><span class="date middot meta-data" title='Mon Aug 8 2022 12:00:00 UTC'>2022-08-08
 </span><span class="reading-time middot meta-data">3 min read
-</span><a class="middot meta-data" href=/blog/arab-security-cyber-wargames-2022/>Permalink</a><div class="d-none d-md-inline tags"><ul class="list-unstyled d-inline"><li class=d-inline style=margin-right:.5rem><a href=/tags/ctf>#ctf</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/writeup>#writeup</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/ascwg>#ascwg</a></li></ul></div></div><div class="markdown blog-post-content"><h3 id=osp-challenge>OSP Challenge</h3><blockquote><p>Have you heard of OTP? This is OSP (One Secret Password).</p></blockquote><p>given an <code>osp.py</code> that contains the following block of code.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#ff79c6>from</span> Crypto.Util.number <span style=color:#ff79c6>import</span> getPrime, long_to_bytes, bytes_to_long, isPrime
-</span></span><span style=display:flex><span><span style=color:#ff79c6>from</span> string <span style=color:#ff79c6>import</span> printable, ascii_letters
-</span></span><span style=display:flex><span><span style=color:#ff79c6>from</span> secret <span style=color:#ff79c6>import</span> FLAG
-</span></span><span style=display:flex><span><span style=color:#ff79c6>import</span> os
+</span><a class="middot meta-data" href=/blog/arab-security-cyber-wargames-2022/>Permalink</a><div class="d-none d-md-inline tags"><ul class="list-unstyled d-inline"><li class=d-inline style=margin-right:.5rem><a href=/tags/ctf>#ctf</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/writeup>#writeup</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/ascwg>#ascwg</a></li></ul></div></div><div class="markdown blog-post-content"><h3 id=osp-challenge>OSP Challenge</h3><blockquote><p>Have you heard of OTP? This is OSP (One Secret Password).</p></blockquote><p>given an <code>osp.py</code> that contains the following block of code.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#080;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>Crypto.Util.number</span> <span style=color:#080;font-weight:700>import</span> getPrime, long_to_bytes, bytes_to_long, isPrime
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>string</span> <span style=color:#080;font-weight:700>import</span> printable, ascii_letters
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>secret</span> <span style=color:#080;font-weight:700>import</span> FLAG
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>os</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>secret <span style=color:#ff79c6>=</span> os<span style=color:#ff79c6>.</span>urandom(<span style=color:#8be9fd;font-style:italic>len</span>(FLAG))
+</span></span><span style=display:flex><span>secret <span style=color:#333>=</span> os<span style=color:#333>.</span>urandom(<span style=color:#007020>len</span>(FLAG))
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#ff79c6>def</span> <span style=color:#50fa7b>OSP</span>(plain, secret):
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>assert</span> <span style=color:#8be9fd;font-style:italic>len</span>(plain) <span style=color:#ff79c6>==</span> <span style=color:#8be9fd;font-style:italic>len</span>(secret), <span style=color:#f1fa8c>&#39;The length has to be idenntical!&#39;</span>
-</span></span><span style=display:flex><span>    ct <span style=color:#ff79c6>=</span> []
-</span></span><span style=display:flex><span>    p <span style=color:#ff79c6>=</span> getPrime(<span style=color:#bd93f9>256</span>)
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>for</span> f, k <span style=color:#ff79c6>in</span> <span style=color:#8be9fd;font-style:italic>zip</span>(FLAG, secret):
-</span></span><span style=display:flex><span>        ct<span style=color:#ff79c6>.</span>append((f <span style=color:#ff79c6>*</span> p <span style=color:#ff79c6>+</span> k))
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> ct, p
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>def</span> <span style=color:#06b;font-weight:700>OSP</span>(plain, secret):
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>assert</span> <span style=color:#007020>len</span>(plain) <span style=color:#333>==</span> <span style=color:#007020>len</span>(secret), <span style=background-color:#fff0f0>&#39;The length has to be idenntical!&#39;</span>
+</span></span><span style=display:flex><span>    ct <span style=color:#333>=</span> []
+</span></span><span style=display:flex><span>    p <span style=color:#333>=</span> getPrime(<span style=color:#00d;font-weight:700>256</span>)
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>for</span> f, k <span style=color:#000;font-weight:700>in</span> <span style=color:#007020>zip</span>(FLAG, secret):
+</span></span><span style=display:flex><span>        ct<span style=color:#333>.</span>append((f <span style=color:#333>*</span> p <span style=color:#333>+</span> k))
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>return</span> ct, p
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>ct, p <span style=color:#ff79c6>=</span> OSP(FLAG, secret)
-</span></span><span style=display:flex><span><span style=color:#8be9fd;font-style:italic>print</span>(ct)
+</span></span><span style=display:flex><span>ct, p <span style=color:#333>=</span> OSP(FLAG, secret)
+</span></span><span style=display:flex><span><span style=color:#007020>print</span>(ct)
 </span></span></code></pre></div><p>And given a text file <code>output.txt</code> that contains the flag encrypted:</p><pre>
 5447072546591309544167389173397699795993168970119080464536675615517059887871841
 6955492636416595264090666175261678201037431146459748900869908862891014933743799
@@ -69,69 +69,69 @@ given code. by looking at <code>output.txt</code> you can see that most of the l
 of length 79. while there are two lines that differs from the rest, they have
 the length of 80.</p><p>the function <code>OSP(plain, secret)</code> takes byte array (b"array")
 and secret (random bytes with the length equals to the flag&rsquo;s length) and
-returns the used prime number and <code>ct</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#ff79c6>def</span> <span style=color:#50fa7b>OSP</span>(plain, secret):
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>assert</span> <span style=color:#8be9fd;font-style:italic>len</span>(plain) <span style=color:#ff79c6>==</span> <span style=color:#8be9fd;font-style:italic>len</span>(secret), <span style=color:#f1fa8c>&#39;The length has to be idenntical!&#39;</span>
-</span></span><span style=display:flex><span>    ct <span style=color:#ff79c6>=</span> []
-</span></span><span style=display:flex><span>    p <span style=color:#ff79c6>=</span> getPrime(<span style=color:#bd93f9>256</span>)
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>for</span> f, k <span style=color:#ff79c6>in</span> <span style=color:#8be9fd;font-style:italic>zip</span>(FLAG, secret):
-</span></span><span style=display:flex><span>        ct<span style=color:#ff79c6>.</span>append((f <span style=color:#ff79c6>*</span> p <span style=color:#ff79c6>+</span> k))
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> ct, p
-</span></span></code></pre></div><p>by just looking you can identify the most important part in it.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#6272a4>#...</span>
-</span></span><span style=display:flex><span>p <span style=color:#ff79c6>=</span> getPrime(<span style=color:#bd93f9>256</span>)
-</span></span><span style=display:flex><span><span style=color:#ff79c6>for</span> f, k <span style=color:#ff79c6>in</span> <span style=color:#8be9fd;font-style:italic>zip</span>(FLAG, secret):
-</span></span><span style=display:flex><span>    ct<span style=color:#ff79c6>.</span>append((f <span style=color:#ff79c6>*</span> p <span style=color:#ff79c6>+</span> k))
-</span></span><span style=display:flex><span><span style=color:#6272a4>#...</span>
-</span></span></code></pre></div><p>Trying the <code>OSP()</code> function to see how it works.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>FLAG <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>b</span><span style=color:#f1fa8c>&#39;A&#39;</span>
-</span></span><span style=display:flex><span>secret <span style=color:#ff79c6>=</span> os<span style=color:#ff79c6>.</span>urandom(<span style=color:#8be9fd;font-style:italic>len</span>(FLAG))
+returns the used prime number and <code>ct</code></p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#080;font-weight:700>def</span> <span style=color:#06b;font-weight:700>OSP</span>(plain, secret):
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>assert</span> <span style=color:#007020>len</span>(plain) <span style=color:#333>==</span> <span style=color:#007020>len</span>(secret), <span style=background-color:#fff0f0>&#39;The length has to be idenntical!&#39;</span>
+</span></span><span style=display:flex><span>    ct <span style=color:#333>=</span> []
+</span></span><span style=display:flex><span>    p <span style=color:#333>=</span> getPrime(<span style=color:#00d;font-weight:700>256</span>)
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>for</span> f, k <span style=color:#000;font-weight:700>in</span> <span style=color:#007020>zip</span>(FLAG, secret):
+</span></span><span style=display:flex><span>        ct<span style=color:#333>.</span>append((f <span style=color:#333>*</span> p <span style=color:#333>+</span> k))
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>return</span> ct, p
+</span></span></code></pre></div><p>by just looking you can identify the most important part in it.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#888>#...</span>
+</span></span><span style=display:flex><span>p <span style=color:#333>=</span> getPrime(<span style=color:#00d;font-weight:700>256</span>)
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>for</span> f, k <span style=color:#000;font-weight:700>in</span> <span style=color:#007020>zip</span>(FLAG, secret):
+</span></span><span style=display:flex><span>    ct<span style=color:#333>.</span>append((f <span style=color:#333>*</span> p <span style=color:#333>+</span> k))
+</span></span><span style=display:flex><span><span style=color:#888>#...</span>
+</span></span></code></pre></div><p>Trying the <code>OSP()</code> function to see how it works.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>FLAG <span style=color:#333>=</span> <span style=background-color:#fff0f0>b</span><span style=background-color:#fff0f0>&#39;A&#39;</span>
+</span></span><span style=display:flex><span>secret <span style=color:#333>=</span> os<span style=color:#333>.</span>urandom(<span style=color:#007020>len</span>(FLAG))
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>ct, p <span style=color:#ff79c6>=</span> OSP(FLAG, secret)
+</span></span><span style=display:flex><span>ct, p <span style=color:#333>=</span> OSP(FLAG, secret)
 </span></span></code></pre></div><p><code>f</code> is the ord(&lsquo;A&rsquo;), <code>p</code> is a prime number and <code>k</code> is a random byte and it will
 result in
 <code>56935293674359....900212209796131672</code>
 of length 79 now i know where is the 79 chars came from.</p><p>i wrote this function to decrypt needing only the prime number.
-By just doing the opposite of what the encrypt function is doing.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#6272a4># decrypts and returns ASCII char</span>
-</span></span><span style=display:flex><span><span style=color:#ff79c6>def</span> <span style=color:#50fa7b>decrypt</span>(ctx, prime) <span style=color:#ff79c6>-&gt;</span> <span style=color:#8be9fd;font-style:italic>int</span>:
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#8be9fd;font-style:italic>int</span>((ctx<span style=color:#ff79c6>-</span><span style=color:#8be9fd;font-style:italic>len</span>(<span style=color:#8be9fd;font-style:italic>str</span>(ctx)))<span style=color:#ff79c6>/</span>prime)
-</span></span></code></pre></div><p>where <code>ctx</code> is <code>f</code>. <code>len(str(ctx))</code> is <code>k</code> and <code>prime</code> is <code>p</code> from the <code>OSP()</code> function</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#8be9fd;font-style:italic>int</span>(
-</span></span><span style=display:flex><span>    (ctx <span style=color:#ff79c6>-</span> <span style=color:#8be9fd;font-style:italic>len</span>(<span style=color:#8be9fd;font-style:italic>str</span>(ctx) )) <span style=color:#ff79c6>/</span> prime
+By just doing the opposite of what the encrypt function is doing.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#888># decrypts and returns ASCII char</span>
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>def</span> <span style=color:#06b;font-weight:700>decrypt</span>(ctx, prime) <span style=color:#333>-&gt;</span> <span style=color:#007020>int</span>:
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>return</span> <span style=color:#007020>int</span>((ctx<span style=color:#333>-</span><span style=color:#007020>len</span>(<span style=color:#007020>str</span>(ctx)))<span style=color:#333>/</span>prime)
+</span></span></code></pre></div><p>where <code>ctx</code> is <code>f</code>. <code>len(str(ctx))</code> is <code>k</code> and <code>prime</code> is <code>p</code> from the <code>OSP()</code> function</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020>int</span>(
+</span></span><span style=display:flex><span>    (ctx <span style=color:#333>-</span> <span style=color:#007020>len</span>(<span style=color:#007020>str</span>(ctx) )) <span style=color:#333>/</span> prime
 </span></span><span style=display:flex><span> )
 </span></span></code></pre></div><p>calling this: <code>decrypt(ct[0], p)</code> returns 65 == ord(&lsquo;A&rsquo;) which is our flag!</p><p>the method this encryption function get&rsquo;s its prime number is by <code>p = getPrime(N)</code></p><p>i know the <code>N</code>. so i went on to bruteforce the prime number. and this is my code
-to do it.</p><h2 id=solution>Solution</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#ff79c6>from</span> Crypto.Util.number <span style=color:#ff79c6>import</span> getPrime
+to do it.</p><h2 id=solution>Solution</h2><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#080;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>Crypto.Util.number</span> <span style=color:#080;font-weight:700>import</span> getPrime
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#6272a4># as from the OSP() function</span>
-</span></span><span style=display:flex><span><span style=color:#6272a4># &gt;&gt; p = getPrime(256)</span>
-</span></span><span style=display:flex><span>BIT_LEN <span style=color:#ff79c6>=</span> <span style=color:#bd93f9>256</span>
+</span></span><span style=display:flex><span><span style=color:#888># as from the OSP() function</span>
+</span></span><span style=display:flex><span><span style=color:#888># &gt;&gt; p = getPrime(256)</span>
+</span></span><span style=display:flex><span>BIT_LEN <span style=color:#333>=</span> <span style=color:#00d;font-weight:700>256</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#6272a4># decrypts and returns ASCII char</span>
-</span></span><span style=display:flex><span><span style=color:#ff79c6>def</span> <span style=color:#50fa7b>decrypt</span>(ctx, prime) <span style=color:#ff79c6>-&gt;</span> <span style=color:#8be9fd;font-style:italic>int</span>:
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#8be9fd;font-style:italic>int</span>((ctx<span style=color:#ff79c6>-</span><span style=color:#8be9fd;font-style:italic>len</span>(<span style=color:#8be9fd;font-style:italic>str</span>(ctx)))<span style=color:#ff79c6>/</span>prime)
+</span></span><span style=display:flex><span><span style=color:#888># decrypts and returns ASCII char</span>
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>def</span> <span style=color:#06b;font-weight:700>decrypt</span>(ctx, prime) <span style=color:#333>-&gt;</span> <span style=color:#007020>int</span>:
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>return</span> <span style=color:#007020>int</span>((ctx<span style=color:#333>-</span><span style=color:#007020>len</span>(<span style=color:#007020>str</span>(ctx)))<span style=color:#333>/</span>prime)
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#6272a4># read output.txt (encrypted data) file</span>
-</span></span><span style=display:flex><span><span style=color:#ff79c6>with</span> <span style=color:#8be9fd;font-style:italic>open</span>(<span style=color:#f1fa8c>&#34;output.txt&#34;</span>, <span style=color:#f1fa8c>&#39;r&#39;</span>) <span style=color:#ff79c6>as</span> f:
-</span></span><span style=display:flex><span>    out <span style=color:#ff79c6>=</span> f<span style=color:#ff79c6>.</span>readlines()
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>for</span> i <span style=color:#ff79c6>in</span> <span style=color:#8be9fd;font-style:italic>range</span>(<span style=color:#8be9fd;font-style:italic>len</span>(out)):
-</span></span><span style=display:flex><span>        out[i] <span style=color:#ff79c6>=</span> out[i]<span style=color:#ff79c6>.</span>strip()
+</span></span><span style=display:flex><span><span style=color:#888># read output.txt (encrypted data) file</span>
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>with</span> <span style=color:#007020>open</span>(<span style=background-color:#fff0f0>&#34;output.txt&#34;</span>, <span style=background-color:#fff0f0>&#39;r&#39;</span>) <span style=color:#080;font-weight:700>as</span> f:
+</span></span><span style=display:flex><span>    out <span style=color:#333>=</span> f<span style=color:#333>.</span>readlines()
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>for</span> i <span style=color:#000;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#007020>len</span>(out)):
+</span></span><span style=display:flex><span>        out[i] <span style=color:#333>=</span> out[i]<span style=color:#333>.</span>strip()
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#6272a4># I know that the flag starts with ASCWG{</span>
-</span></span><span style=display:flex><span>flag_pfx <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;ASCWG{&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#888># I know that the flag starts with ASCWG{</span>
+</span></span><span style=display:flex><span>flag_pfx <span style=color:#333>=</span> <span style=background-color:#fff0f0>&#34;ASCWG{&#34;</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#ff79c6>def</span> <span style=color:#50fa7b>solve</span>(prime) <span style=color:#ff79c6>-&gt;</span> <span style=color:#8be9fd;font-style:italic>str</span>:
-</span></span><span style=display:flex><span>    flag <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;&#34;</span>
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>for</span> i <span style=color:#ff79c6>in</span> <span style=color:#8be9fd;font-style:italic>range</span>(<span style=color:#8be9fd;font-style:italic>len</span>(out)):
-</span></span><span style=display:flex><span>        flag <span style=color:#ff79c6>+=</span> <span style=color:#8be9fd;font-style:italic>chr</span>(decrypt(<span style=color:#8be9fd;font-style:italic>int</span>(out[i]), prime))
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> flag
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>def</span> <span style=color:#06b;font-weight:700>solve</span>(prime) <span style=color:#333>-&gt;</span> <span style=color:#007020>str</span>:
+</span></span><span style=display:flex><span>    flag <span style=color:#333>=</span> <span style=background-color:#fff0f0>&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>for</span> i <span style=color:#000;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#007020>len</span>(out)):
+</span></span><span style=display:flex><span>        flag <span style=color:#333>+=</span> <span style=color:#007020>chr</span>(decrypt(<span style=color:#007020>int</span>(out[i]), prime))
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>return</span> flag
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>p <span style=color:#ff79c6>=</span> getPrime(BIT_LEN)
-</span></span><span style=display:flex><span>ret <span style=color:#ff79c6>=</span> solve(p)
+</span></span><span style=display:flex><span>p <span style=color:#333>=</span> getPrime(BIT_LEN)
+</span></span><span style=display:flex><span>ret <span style=color:#333>=</span> solve(p)
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#6272a4># Bruteforce prime number</span>
-</span></span><span style=display:flex><span><span style=color:#ff79c6>while</span> flag_pfx <span style=color:#ff79c6>not</span> <span style=color:#ff79c6>in</span> ret:
-</span></span><span style=display:flex><span>    p <span style=color:#ff79c6>=</span> getPrime(BIT_LEN)
-</span></span><span style=display:flex><span>    ret <span style=color:#ff79c6>=</span> solve(p)
+</span></span><span style=display:flex><span><span style=color:#888># Bruteforce prime number</span>
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>while</span> flag_pfx <span style=color:#000;font-weight:700>not</span> <span style=color:#000;font-weight:700>in</span> ret:
+</span></span><span style=display:flex><span>    p <span style=color:#333>=</span> getPrime(BIT_LEN)
+</span></span><span style=display:flex><span>    ret <span style=color:#333>=</span> solve(p)
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#8be9fd;font-style:italic>print</span>(<span style=color:#f1fa8c>f</span><span style=color:#f1fa8c>&#34;prime: </span><span style=color:#f1fa8c>{</span>p<span style=color:#f1fa8c>}</span><span style=color:#f1fa8c>&#34;</span>)
-</span></span><span style=display:flex><span><span style=color:#8be9fd;font-style:italic>print</span>(<span style=color:#f1fa8c>f</span><span style=color:#f1fa8c>&#34;flag length: </span><span style=color:#f1fa8c>{</span><span style=color:#8be9fd;font-style:italic>len</span>(ret)<span style=color:#f1fa8c>}</span><span style=color:#f1fa8c>&#34;</span>)
-</span></span><span style=display:flex><span><span style=color:#8be9fd;font-style:italic>print</span>(<span style=color:#f1fa8c>f</span><span style=color:#f1fa8c>&#34;flag: </span><span style=color:#f1fa8c>{</span>ret<span style=color:#f1fa8c>}</span><span style=color:#f1fa8c>&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#007020>print</span>(<span style=background-color:#fff0f0>f</span><span style=background-color:#fff0f0>&#34;prime: </span><span style=background-color:#eee>{</span>p<span style=background-color:#eee>}</span><span style=background-color:#fff0f0>&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#007020>print</span>(<span style=background-color:#fff0f0>f</span><span style=background-color:#fff0f0>&#34;flag length: </span><span style=background-color:#eee>{</span><span style=color:#007020>len</span>(ret)<span style=background-color:#eee>}</span><span style=background-color:#fff0f0>&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#007020>print</span>(<span style=background-color:#fff0f0>f</span><span style=background-color:#fff0f0>&#34;flag: </span><span style=background-color:#eee>{</span>ret<span style=background-color:#eee>}</span><span style=background-color:#fff0f0>&#34;</span>)
 </span></span></code></pre></div><pre>
 $ python solve.py
 prime: 83614740067651512734468706.....00802220121111201

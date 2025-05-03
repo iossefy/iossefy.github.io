@@ -306,9 +306,9 @@ input {
     border-bottom: 1px dashed #8593ae;
 }
 
-code span {
-    color: #fff;
-}
+/* code span { */
+/*     color: #fff; */
+/* } */
 
 
 hr.footer-linebreak {

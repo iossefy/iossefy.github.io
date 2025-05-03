@@ -5,17 +5,17 @@ get a copy of this document.
 </span><span class="date middot meta-data" title='Wed Oct 26 2022 12:00:00 UTC'>2022-10-26
 </span><span class="reading-time middot meta-data">15 min read
 </span><span class="middot meta-data">unlisted
-</span><a class="middot meta-data" href=/blog/sed1line/>Permalink</a><div class="d-none d-md-inline tags"><ul class="list-unstyled d-inline"><li class=d-inline style=margin-right:.5rem><a href=/tags/bash>#bash</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/sed>#sed</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/grep>#grep</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/linux>#linux</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/scripting>#scripting</a></li></ul></div></div><div class="markdown blog-post-content"><p>I find this document very useful and i would like to share it here.</p><p>get a copy of this document.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#6272a4># download this page</span>
-</span></span><span style=display:flex><span>curl <span style=color:#f1fa8c>&#34;/blog/sed1line/&#34;</span> | tee sed1line
+</span><a class="middot meta-data" href=/blog/sed1line/>Permalink</a><div class="d-none d-md-inline tags"><ul class="list-unstyled d-inline"><li class=d-inline style=margin-right:.5rem><a href=/tags/bash>#bash</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/sed>#sed</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/grep>#grep</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/linux>#linux</a></li><li class=d-inline style=margin-right:.5rem><a href=/tags/scripting>#scripting</a></li></ul></div></div><div class="markdown blog-post-content"><p>I find this document very useful and i would like to share it here.</p><p>get a copy of this document.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#888># download this page</span>
+</span></span><span style=display:flex><span>curl <span style=background-color:#fff0f0>&#34;/blog/sed1line/&#34;</span> | tee sed1line
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#6272a4># extract the text file from html</span>
-</span></span><span style=display:flex><span><span style=color:#6272a4># xD</span>
-</span></span><span style=display:flex><span>awk <span style=color:#f1fa8c>&#39;/&lt;pre&gt;/,/&lt;\/pre\&gt;/&#39;</span> sed1line | grep -vE <span style=color:#f1fa8c>&#39;^&lt;&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#888># extract the text file from html</span>
+</span></span><span style=display:flex><span><span style=color:#888># xD</span>
+</span></span><span style=display:flex><span>awk <span style=background-color:#fff0f0>&#39;/&lt;pre&gt;/,/&lt;\/pre\&gt;/&#39;</span> sed1line | grep -vE <span style=background-color:#fff0f0>&#39;^&lt;&#39;</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#6272a4># or as a oneliner</span>
-</span></span><span style=display:flex><span>curl -s <span style=color:#f1fa8c>&#34;/blog/sed1line/&#34;</span> 2&gt;&amp;<span style=color:#bd93f9>1</span> <span style=color:#f1fa8c>\
-</span></span></span><span style=display:flex><span><span style=color:#f1fa8c></span>	| awk <span style=color:#f1fa8c>&#39;/&lt;pre&gt;/,/&lt;\/pre\&gt;/&#39;</span> <span style=color:#f1fa8c>\
-</span></span></span><span style=display:flex><span><span style=color:#f1fa8c></span>	| grep -vE <span style=color:#f1fa8c>&#39;^&lt;&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#888># or as a oneliner</span>
+</span></span><span style=display:flex><span>curl -s <span style=background-color:#fff0f0>&#34;/blog/sed1line/&#34;</span> 2&gt;&amp;<span style=color:#60e;font-weight:700>1</span> <span style=color:#666;background-color:#fff0f0;font-weight:700>\
+</span></span></span><span style=display:flex><span><span style=color:#666;background-color:#fff0f0;font-weight:700></span>	| awk <span style=background-color:#fff0f0>&#39;/&lt;pre&gt;/,/&lt;\/pre\&gt;/&#39;</span> <span style=color:#666;background-color:#fff0f0;font-weight:700>\
+</span></span></span><span style=display:flex><span><span style=color:#666;background-color:#fff0f0;font-weight:700></span>	| grep -vE <span style=background-color:#fff0f0>&#39;^&lt;&#39;</span>
 </span></span></code></pre></div><p>jokes aside, that&rsquo;s what matters. check the <a href=#references>source</a></p><pre tabindex=0><code>-------------------------------------------------------------------------
 USEFUL ONE-LINE SCRIPTS FOR SED (Unix stream editor)        Dec. 29, 2005
 Compiled by Eric Pement - pemente[at]northpark[dot]edu        version 5.5

@@ -2,21 +2,21 @@
 &lt;blockquote>
 &lt;p>Have you heard of OTP? This is OSP (One Secret Password).&lt;/p>&lt;/blockquote>
 &lt;p>given an &lt;code>osp.py&lt;/code> that contains the following block of code.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ff79c6">from&lt;/span> Crypto.Util.number &lt;span style="color:#ff79c6">import&lt;/span> getPrime, long_to_bytes, bytes_to_long, isPrime
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ff79c6">from&lt;/span> string &lt;span style="color:#ff79c6">import&lt;/span> printable, ascii_letters
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ff79c6">from&lt;/span> secret &lt;span style="color:#ff79c6">import&lt;/span> FLAG
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ff79c6">import&lt;/span> os
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#080;font-weight:bold">from&lt;/span> &lt;span style="color:#0e84b5;font-weight:bold">Crypto.Util.number&lt;/span> &lt;span style="color:#080;font-weight:bold">import&lt;/span> getPrime, long_to_bytes, bytes_to_long, isPrime
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#080;font-weight:bold">from&lt;/span> &lt;span style="color:#0e84b5;font-weight:bold">string&lt;/span> &lt;span style="color:#080;font-weight:bold">import&lt;/span> printable, ascii_letters
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#080;font-weight:bold">from&lt;/span> &lt;span style="color:#0e84b5;font-weight:bold">secret&lt;/span> &lt;span style="color:#080;font-weight:bold">import&lt;/span> FLAG
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#080;font-weight:bold">import&lt;/span> &lt;span style="color:#0e84b5;font-weight:bold">os&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>secret &lt;span style="color:#ff79c6">=&lt;/span> os&lt;span style="color:#ff79c6">.&lt;/span>urandom(&lt;span style="color:#8be9fd;font-style:italic">len&lt;/span>(FLAG))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>secret &lt;span style="color:#333">=&lt;/span> os&lt;span style="color:#333">.&lt;/span>urandom(&lt;span style="color:#007020">len&lt;/span>(FLAG))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ff79c6">def&lt;/span> &lt;span style="color:#50fa7b">OSP&lt;/span>(plain, secret):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ff79c6">assert&lt;/span> &lt;span style="color:#8be9fd;font-style:italic">len&lt;/span>(plain) &lt;span style="color:#ff79c6">==&lt;/span> &lt;span style="color:#8be9fd;font-style:italic">len&lt;/span>(secret), &lt;span style="color:#f1fa8c">&amp;#39;The length has to be idenntical!&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ct &lt;span style="color:#ff79c6">=&lt;/span> []
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> p &lt;span style="color:#ff79c6">=&lt;/span> getPrime(&lt;span style="color:#bd93f9">256&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ff79c6">for&lt;/span> f, k &lt;span style="color:#ff79c6">in&lt;/span> &lt;span style="color:#8be9fd;font-style:italic">zip&lt;/span>(FLAG, secret):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ct&lt;span style="color:#ff79c6">.&lt;/span>append((f &lt;span style="color:#ff79c6">*&lt;/span> p &lt;span style="color:#ff79c6">+&lt;/span> k))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ff79c6">return&lt;/span> ct, p
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#080;font-weight:bold">def&lt;/span> &lt;span style="color:#06b;font-weight:bold">OSP&lt;/span>(plain, secret):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#080;font-weight:bold">assert&lt;/span> &lt;span style="color:#007020">len&lt;/span>(plain) &lt;span style="color:#333">==&lt;/span> &lt;span style="color:#007020">len&lt;/span>(secret), &lt;span style="background-color:#fff0f0">&amp;#39;The length has to be idenntical!&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ct &lt;span style="color:#333">=&lt;/span> []
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> p &lt;span style="color:#333">=&lt;/span> getPrime(&lt;span style="color:#00d;font-weight:bold">256&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#080;font-weight:bold">for&lt;/span> f, k &lt;span style="color:#000;font-weight:bold">in&lt;/span> &lt;span style="color:#007020">zip&lt;/span>(FLAG, secret):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ct&lt;span style="color:#333">.&lt;/span>append((f &lt;span style="color:#333">*&lt;/span> p &lt;span style="color:#333">+&lt;/span> k))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#080;font-weight:bold">return&lt;/span> ct, p
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ct, p &lt;span style="color:#ff79c6">=&lt;/span> OSP(FLAG, secret)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8be9fd;font-style:italic">print&lt;/span>(ct)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ct, p &lt;span style="color:#333">=&lt;/span> OSP(FLAG, secret)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#007020">print&lt;/span>(ct)
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And given a text file &lt;code>output.txt&lt;/code> that contains the flag encrypted:&lt;/p></description></item></channel></rss>
