@@ -69,12 +69,6 @@ ul li {
 }
 
 
-/* ruins the responsiveness */
-/* .nav li { */
-/* 	padding: 0 2rem 0 2rem; */
-/* } */
-
-
 .header h1.name {
     /* border: 2px solid; */
     text-decoration: none;
@@ -84,16 +78,6 @@ ul li {
     font-family: "Embelma One";
     /* font-size: 2.5rem; */
 }
-
-/* add a border around the title */
-/* on screens that don't have much width*/
-/* i was testing if it looks any better if i*/
-/* add some border to if. it doesn't.*/
-/* @media (max-width: 548px) { */
-/* 	.header h1.name { */
-/* 		border: 2px solid; */
-/* 	} */
-/* } */
 
 .markdown.page-content {
     font-size: 1.0625rem;
@@ -105,27 +89,16 @@ ul li {
     line-height: 2rem;
 }
 
-/* .content .blog-post-title { */
-/* 	font-family: "Roboto Mono"; */
-/* 	font-size: 2rem; */
-/* } */
-
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
-
 
 .unix-cmd {
     font-family: monospace;
@@ -220,35 +193,9 @@ h6{
     color: #2a3132;
 }
 
-/* blockquote, */
-/* img, */
-/* video { */
-/* 	box-shadow: 2px 2px 15px #93a1a1; */
-/* } */
-
-/* /\* code, *\/ */
-/* blockquote { */
-/* 	background-color: #fff; */
-/* } */
-
-/* blockquote::before { */
-/* 	color: #ab2720; */
-/* } */
-
 a.dotted {
     color: #586e75;
 }
-
-/* pre { */
-/* 	background-color: #eee8d5; */
-/* } */
-
-
-
-/* .content .markdown pre code { */
-/* 	color: #586e75; */
-/* 	background-color: #fdf6e3; */
-/* } */
 
 
 .content .markdown pre {
@@ -311,11 +258,6 @@ input {
     background-color: inherit;
     border-bottom: 1px dashed #8593ae;
 }
-
-/* code span { */
-/*     color: #fff; */
-/* } */
-
 
 hr.footer-linebreak {
     background: url('/img/svg/cat.svg') center/contain no-repeat;
