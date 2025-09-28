@@ -14,7 +14,7 @@
 body {
     /* font-family: 'Open Sans'; */
     font-family: sans-serif;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 img {
@@ -35,6 +35,10 @@ img {
     font-weight: 600 !important;
 }
 
+.markdown > ul > li {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
 
 .profile-pic img {
     /* opacity: 0.60; */
@@ -48,18 +52,6 @@ img {
     margin-right: 20px;
 }
 
-
-/* .not-found-title { */
-/*     font-weight: 600; */
-/* } */
-
-/* .header h1.name { */
-/* 	font-weight: 600; */
-/* 	font-size: 2.1875rem; */
-/* 	font-family: "Noto Serif"; */
-/* } */
-
-
 ul li {
     margin-left: 0rem;
 }
@@ -67,6 +59,18 @@ ul li {
 .nav li {
     padding: 0 1rem 0 1rem;
 }
+
+pre {
+    color: #0E1116 !important;
+    background-color: #dfdfdf !important;
+    /* background-color: #e4e4e4 !important; */
+    border-color: #33333333 !important;
+}
+
+div.highlight > * > * > * {
+    font-size: 0.9rem;
+}
+
 
 
 .header h1.name {
@@ -125,12 +129,12 @@ table {
 }
 
 * {
-    color: #626d71;
+    color: #292929;
 }
 
 
 div.highlight pre code {
-    color: #fff;
+    color: #e4e4e4;
 }
 
 .header h1.name {
@@ -139,20 +143,27 @@ div.highlight pre code {
 
 
 body {
-    background-color: #fff;
-    color: #111;
+    background-color: #e4e4e4;
 }
 
 
 .content h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    color: #353025;
+    color: #292929;
     margin-bottom: 1rem;
+}
+
+.content .markdown blockquote {
+    border-left: 0.25rem solid #cacaca;
+}
+
+.markdown > blockquote:nth-child(2) > p {
+    color: #7a7a7a;
 }
 
 
 a {
-    color: #4d648d;
+    color: #A2798F;
     background-color: transparent;
 }
 
@@ -162,20 +173,20 @@ a:active, a:hover {
 }
 
 a:hover, a:focus {
-    color: #2f496e;
+    color: #796878;
     text-decoration: underline;
 }
 
 .nav-link {
     display: block;
     padding: 0.5rem 1rem;
-    color: #4d648d;
+    color: #A2798F;
     /* color: inherit; */
     text-decoration: none;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 .nav-link:hover, .nav-link:focus {
-    color: #2f496e;
+    color: #796878;
 }
 
 .nav-link.disabled {
@@ -210,8 +221,12 @@ a.dotted {
     word-wrap: break-word;
     margin-left: 1.5rem;
     margin-right: 1.5rem;
-    border: 1px solid #ddd;
+    border: 1px solid #e4e4e4;
     border-radius: 6px;
+}
+
+.content .markdown code {
+    color: maroon;
 }
 
 .content .markdown pre code, .content .markdown pre output {
@@ -223,34 +238,56 @@ a.dotted {
 }
 
 
+div.meta-data div.meta {
+    background-color: #000 !important;
+}
+
+div.meta-data {
+    background-color: inherit;
+}
+
+
 .content .meta {
     font-weight: 400;
     font-size: 1rem;
-    color: #8593ae;
+    color: #6e6e6e !important;
     margin-bottom: 10px;
 }
 
 .content .meta-data {
     font-weight: 400;
     font-size: 1rem;
-    color: #063852;
+    color: #6e6e6e;
     margin-bottom: 10px;
 }
 
 .content .meta-brief {
-    color: #1e656d;
+    color: ##787878;
+}
+
+.boxed-tag {
+    color: #0E1116;
+    font-family: monospace;
+    /* background-color: #d1d1d1; */
+    margin-top: 10px;
+    display: inline-block;      /* so the border hugs the text */
+    padding: 1px;         /* space around text */
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid #d1d1d1;    /* the actual border */
+    border-radius: 5px;        /* makes it rounded */
 }
 
 .content .caption {
     text-align: center;
     margin-top: 10px;
-    color: #92aac7;
+    color: #787878;
     font-size: 0.9rem;
 }
 
 .figure-caption {
     font-size: 0.875em;
-    color: #92aac7;
+    color: #787878;
 }
 
 
@@ -271,201 +308,3 @@ hr.footer-linebreak {
     margin-top: 0;
     margin-bottom: 0;
 }
-
-/* @media (prefers-color-scheme: dark) { */
-/*     * { */
-/* 	color: rgb(165, 158, 146); */
-/* 	scrollbar-color: #454a4d #202324; */
-/*     } */
-
-
-/*     div.highlight pre code { */
-/* 	color: #fff; */
-/*     } */
-
-
-/*     html, body { */
-/* 	border-color: #736b5e; */
-/*     } */
-
-/*     body { */
-/* 	color: rgb(221, 218, 214); */
-/* 	background: rgb(24, 26, 27); */
-/*     } */
-
-/*     pre, code { */
-/* 	background-color: #262626; */
-/*     } */
-
-/*     .date { */
-/* 	color: #BABABA; */
-/*     } */
-
-/*     hr { */
-/* 	background: #EBEBEB; */
-/*     } */
-
-/*     .header h1.name { */
-/* 	color: rgb(203, 198, 192); */
-/*     } */
-
-/*     .content h1, h2, h3, h4, h5, h6 { */
-/* 	font-weight: 600; */
-/* 	color: rgb(204, 199, 192); */
-/* 	margin-bottom: 1rem; */
-/*     } */
-
-/*     img,video { */
-/* 	border-radius: .9%; */
-/*     } */
-
-/*     a { */
-/* 	color: rgb(153, 184, 212); */
-/* 	text-decoration: underline; */
-/* 	background-color: transparent; */
-/*     } */
-
-/*     a:active, a:hover { */
-/* 	outline-width: 0; */
-/*     } */
-
-/*     a:hover, a:focus { */
-/* 	color: rgb(153, 184, 212); */
-/* 	text-decoration: underline; */
-/*     } */
-
-/*     .nav-link { */
-/* 	display: block; */
-/* 	padding: 0.5rem 1rem; */
-/* 	color: rgb(153, 184, 212); */
-/* 	/\* color: inherit; *\/ */
-/* 	text-decoration: none; */
-/* 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out; */
-/*     } */
-/*     .nav-link:hover, .nav-link:focus { */
-/* 	color: rgb(153, 184, 212); */
-
-/*     } */
-/*     .nav-link.disabled { */
-/* 	color: #6c757d; */
-/* 	pointer-events: none; */
-/* 	cursor: default; */
-/*     } */
-
-/*     pre, code { */
-/* 	font: 12px Consolas, Courier, monospace; */
-/* 	background-color: #121212; */
-/*     } */
-
-/*     .content .markdown code, .content .markdown pre { */
-/* 	font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
-/* 	background-color: rgb(24, 26, 27); */
-/*     } */
-
-/*     .content .markdown code { */
-/* 	/\* enclosed by single backtick (`) *\/ */
-/* 	color: rgb(200, 195, 188); */
-/* 	padding: .2em .4em; */
-/* 	margin: 0; */
-/* 	font-size: 1rem; */
-/* 	background-color: rgba(22, 25, 28, 0.05); */
-/* 	border-radius: 6px; */
-/*     } */
-
-/*     pre { */
-/* 	background-color: #121212; */
-/*     } */
-
-
-/*     /\* .content .markdown pre code { *\/ */
-/*     /\* 	color: #FDFDFD; *\/ */
-/*     /\* 	background-color: #121212; *\/ */
-/*     /\* } *\/ */
-
-
-/*     .content .markdown pre { */
-/* 	/\* Hugo specific: consider using the 'highlight' shortcode *\/ */
-/* 	display: block; */
-/* 	margin-top: 1rem; */
-/* 	margin-bottom: 2rem; */
-/* 	padding: 1rem; */
-/* 	line-height: 20px; */
-/* 	white-space: pre; */
-/* 	word-break: break-all; */
-/* 	word-wrap: break-word; */
-/* 	margin-left: 1.5rem; */
-/* 	margin-right: 1.5rem; */
-/* 	border: 1px solid #ddd; */
-/* 	border-radius: 6px; */
-/* 	border-color: rgb(58, 62, 65); */
-/*     } */
-
-/*     .content .markdown pre code, .content .markdown pre output { */
-/* 	/\* enclosed by 4 backticks (````) *\/ */
-/* 	padding: 0; */
-/* 	font-size: 0.75rem; */
-/* 	line-height: 20px; */
-/* 	border-radius: 0; */
-/*     } */
-
-/*     .content .markdown blockquote { */
-/* 	padding: 0.5rem 0.5rem; */
-/* 	margin-top: 1rem; */
-/* 	margin-bottom: 1rem; */
-/* 	color: rgb(155, 146, 133); */
-/* 	border-left: 0.25rem solid rgb(55, 60, 62); */
-/*     } */
-
-/*     .content .meta { */
-/* 	font-weight: 400; */
-/* 	font-size: 1rem; */
-/* 	color: rgb(204, 200, 193); */
-/* 	margin-bottom: 10px; */
-/*     } */
-
-/*     .content .meta-data { */
-/* 	font-weight: 400; */
-/* 	font-size: 1rem; */
-/* 	color: rgb(204, 200, 193); */
-/* 	margin-bottom: 10px; */
-/*     } */
-
-/*     .content .meta-brief { */
-/* 	color: rgb(139, 214, 223); */
-/*     } */
-
-/*     .content .caption { */
-/* 	text-align: center; */
-/* 	margin-top: 10px; */
-/* 	color: rgb(204, 200, 193); */
-/* 	font-size: 0.9rem; */
-/*     } */
-
-/*     .figure-caption { */
-/* 	font-size: 0.875em; */
-/* 	color: rgb(204, 200, 193); */
-/*     } */
-
-/*     .alert-outline  { border: 3px solid #e7e7e7; color: #fdfdfd} */
-
-/*     .btn-outline { */
-/* 	background-color: inherit; */
-/*     } */
-
-/*     input { */
-/* 	background-color: inherit; */
-/* 	border-bottom: 1px dashed #e7e7e7; */
-/*     } */
-
-
-/*     /\* aside { *\/ */
-/*     /\* 	box-shadow: inset 5px 0 5px -5px #35354c; *\/ */
-/*     /\* 	font-style: italic; *\/ */
-/*     /\* 	color:  rgb(139, 214, 223); *\/ */
-/*     /\* } *\/ */
-
-/*     /\* code highlighter specific *\/ */
-/*     div.highlight, pre code span { */
-/* 	color: #fff; */
-/*     } */
-/* } */

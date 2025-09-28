@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Youssef Hesham - Software, security and chess</title><link>/</link><description>Recent content on Youssef Hesham - Software, security and chess</description><language>en</language><managingEditor>youssef @[redacted] &amp;> /dev/null (Youssef Hesham)</managingEditor><copyright>Youssef Hesham</copyright><lastBuildDate>Sat, 03 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Using mitmproxy instead of burpsuite? (exploring a blind sqli portswigger lab)</title><link>/blog/using-mitmproxy-instead-of-burpsuite-sqli/</link><category>mitmproxy</category><category>burpsuite</category><category>portswigger</category><category>blind sql injection</category><pubDate>Wed, 24 Aug 2022 01:00:00 +0000</pubDate><author>youssef @[redacted] &amp;> /dev/null</author><guid>/blog/using-mitmproxy-instead-of-burpsuite-sqli/</guid><description>&lt;p>&lt;span class="first-letter">P&lt;/span>ortSwigger made a powerful tool &lt;code>burpsuite&lt;/code> for performing security testing of
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Iossefy</title><link>/</link><description>Recent content on Iossefy</description><language>en</language><managingEditor>youssef @[redacted] &amp;> /dev/null (iossefy)</managingEditor><copyright>Youssef Hesham</copyright><lastBuildDate>Sun, 28 Sep 2025 12:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Shellcode 101: The notes i wish existed when i started learning shellcode</title><link>/blog/shellcode-101-the-notes-i-wish-existed-when-i-started-learning-shellcode/</link><category>ctf</category><category>shellcode</category><pubDate>Sun, 28 Sep 2025 12:00:00 +0000</pubDate><author>youssef @[redacted] &amp;> /dev/null</author><guid>/blog/shellcode-101-the-notes-i-wish-existed-when-i-started-learning-shellcode/</guid><description>&lt;p>I have faith of who ever reading this article is not a layman, you are probably
+familiar with CTFs, overflowed the buffer and smashed the stack once, and
+knowing what you are getting your self into. I assume you know what a CTF challenge is, x86 assembly basics, and using linux.&lt;/p>
+&lt;p>The term &amp;ldquo;shellcode&amp;rdquo; originates from the common objective of an exploit usually
+to execute a command shell &lt;code>/bin/sh&lt;/code>. the code is written in an assembly
+language.&lt;/p></description></item><item><title>Using mitmproxy instead of burpsuite? (exploring a blind sqli portswigger lab)</title><link>/blog/using-mitmproxy-instead-of-burpsuite-sqli/</link><category>mitmproxy</category><category>burpsuite</category><category>portswigger</category><category>blind sql injection</category><pubDate>Wed, 24 Aug 2022 01:00:00 +0000</pubDate><author>youssef @[redacted] &amp;> /dev/null</author><guid>/blog/using-mitmproxy-instead-of-burpsuite-sqli/</guid><description>&lt;p>&lt;span class="first-letter">P&lt;/span>ortSwigger made a powerful tool &lt;code>burpsuite&lt;/code> for performing security testing of
 web applications. in its community edition it includes tools like repeater,
 decoder/encoder, burp intruder which helps in modifying http requests and study
 its behaviour.&lt;/p>
@@ -12,24 +17,74 @@ burpsuite, python scripting is permitted of course.&lt;/p></description></item><
 &lt;blockquote>
 &lt;p>Have you heard of OTP? This is OSP (One Secret Password).&lt;/p>&lt;/blockquote>
 &lt;p>given an &lt;code>osp.py&lt;/code> that contains the following block of code.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#080;font-weight:bold">from&lt;/span> &lt;span style="color:#0e84b5;font-weight:bold">Crypto.Util.number&lt;/span> &lt;span style="color:#080;font-weight:bold">import&lt;/span> getPrime, long_to_bytes, bytes_to_long, isPrime
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#080;font-weight:bold">from&lt;/span> &lt;span style="color:#0e84b5;font-weight:bold">string&lt;/span> &lt;span style="color:#080;font-weight:bold">import&lt;/span> printable, ascii_letters
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#080;font-weight:bold">from&lt;/span> &lt;span style="color:#0e84b5;font-weight:bold">secret&lt;/span> &lt;span style="color:#080;font-weight:bold">import&lt;/span> FLAG
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#080;font-weight:bold">import&lt;/span> &lt;span style="color:#0e84b5;font-weight:bold">os&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>secret &lt;span style="color:#333">=&lt;/span> os&lt;span style="color:#333">.&lt;/span>urandom(&lt;span style="color:#007020">len&lt;/span>(FLAG))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#080;font-weight:bold">def&lt;/span> &lt;span style="color:#06b;font-weight:bold">OSP&lt;/span>(plain, secret):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#080;font-weight:bold">assert&lt;/span> &lt;span style="color:#007020">len&lt;/span>(plain) &lt;span style="color:#333">==&lt;/span> &lt;span style="color:#007020">len&lt;/span>(secret), &lt;span style="background-color:#fff0f0">&amp;#39;The length has to be idenntical!&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ct &lt;span style="color:#333">=&lt;/span> []
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> p &lt;span style="color:#333">=&lt;/span> getPrime(&lt;span style="color:#00d;font-weight:bold">256&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#080;font-weight:bold">for&lt;/span> f, k &lt;span style="color:#000;font-weight:bold">in&lt;/span> &lt;span style="color:#007020">zip&lt;/span>(FLAG, secret):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ct&lt;span style="color:#333">.&lt;/span>append((f &lt;span style="color:#333">*&lt;/span> p &lt;span style="color:#333">+&lt;/span> k))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#080;font-weight:bold">return&lt;/span> ct, p
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ct, p &lt;span style="color:#333">=&lt;/span> OSP(FLAG, secret)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#007020">print&lt;/span>(ct)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And given a text file &lt;code>output.txt&lt;/code> that contains the flag encrypted:&lt;/p></description></item><item><title>First post</title><link>/blog/first-post/</link><category>misc</category><pubDate>Tue, 21 Dec 2021 12:00:00 +0000</pubDate><author>youssef @[redacted] &amp;> /dev/null</author><guid>/blog/first-post/</guid><description>&lt;p>Hi.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="ln"> 1&lt;/span>&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">Crypto.Util.number&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">getPrime&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">long_to_bytes&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">bytes_to_long&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">isPrime&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 2&lt;/span>&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">string&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">printable&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ascii_letters&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 3&lt;/span>&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">secret&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">FLAG&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 4&lt;/span>&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">os&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 5&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 6&lt;/span>&lt;span class="cl">&lt;span class="n">secret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">urandom&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">FLAG&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 7&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 8&lt;/span>&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">OSP&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">plain&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">secret&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 9&lt;/span>&lt;span class="cl"> &lt;span class="k">assert&lt;/span> &lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">plain&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">secret&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s1">&amp;#39;The length has to be idenntical!&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">10&lt;/span>&lt;span class="cl"> &lt;span class="n">ct&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">11&lt;/span>&lt;span class="cl"> &lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">getPrime&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">256&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">12&lt;/span>&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">k&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">zip&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">FLAG&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">secret&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">13&lt;/span>&lt;span class="cl"> &lt;span class="n">ct&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">f&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">p&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">k&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">14&lt;/span>&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">ct&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">p&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">15&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">16&lt;/span>&lt;span class="cl">&lt;span class="n">ct&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">OSP&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">FLAG&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">secret&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">17&lt;/span>&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ct&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And given a text file &lt;code>output.txt&lt;/code> that contains the flag encrypted:&lt;/p>
+&lt;pre>
+5447072546591309544167389173397699795993168970119080464536675615517059887871841
+6955492636416595264090666175261678201037431146459748900869908862891014933743799
+5614674778794119068603308840271475174331420323045821401907034865225277115190905
+7290697100822214312962505509009228957713933852313230775610627362307449388382150
+5949879243199738117475148174019025931007923028899303276647753364641711569829134
+10307537280472785752809059512737185767802458204994567648277093857055359480126320
+7290697100822214312962505509009228957713933852313230775610627362307449388382014
+8715316074546095270667822677436319673589070352190528743258680984827295820594564
+4357658037273047635333911338718159836794535176095264371629340492413647910297392
+4609061385577261921987790839028822904301912205485375777684879366975973751276187
+7961106029633452410706184176504330471066939264020194525092064361140318297658489
+4106254688968833348680031838407496769287158146705152965573801617851322069318627
+8547713842343285746231903010562544295250818999263787805888321735119078593275661
+7961106029633452410706184176504330471066939264020194525092064361140318297658510
+4106254688968833348680031838407496769287158146705152965573801617851322069318692
+4609061385577261921987790839028822904301912205485375777684879366975973751276175
+3268243527954785726500433504038619877595901382071448278722005369310235932723134
+9637128351661547655065380845242084254449452793287603898795656858222490570849839
+7961106029633452410706184176504330471066939264020194525092064361140318297658493
+6536487055909571453000867008077239755191802764142896557444010738620471865445985
+4022453572867428586462072004970609080118032470241782496888621992997213455659123
+4609061385577261921987790839028822904301912205485375777684879366975973751276211
+7961106029633452410706184176504330471066939264020194525092064361140318297658707
+5363271430489904781949429339960812106824043293655709995851495990662951274212211
+7961106029633452410706184176504330471066939264020194525092064361140318297658649
+6704089288112380977436786674951015133530054117069637494814369988328689092765262
+9553327235560142892847421011805196565280327116824233430110477233368381957190188
+4106254688968833348680031838407496769287158146705152965573801617851322069318653
+6452685939808166690782907174640352066022677087679526088758831113766363251786487
+4273856921171642873115951505281272147625409499631893902944160867559539296637772
+2765436831346357153192674503417293742581147323291225466610927620185584250765693
+3771050224563214299808192504659946012610655440851671090833083118434887614680427
+8547713842343285746231903010562544295250818999263787805888321735119078593275529
+4022453572867428586462072004970609080118032470241782496888621992997213455659182
+8547713842343285746231903010562544295250818999263787805888321735119078593275562
+8547713842343285746231903010562544295250818999263787805888321735119078593275594
+8128708261836261935142103843378105849405190616946935462462423610848535524977837
+4273856921171642873115951505281272147625409499631893902944160867559539296637945
+4525260269475857159769831005591935215132786529022005308999699742121865137616416
+4441459153374452397551871172155047525963660852558634840314520117267756523956886
+4609061385577261921987790839028822904301912205485375777684879366975973751276006
+8463912726241880984013943177125656606081693322800417337203142110264969979616102
+10475139512675595277244979179610961146140709557921308585647453106763576707445416
+&lt;/pre>
+&lt;h3 id="my-approach-solving-the-challange">My approach solving the challange&lt;/h3>
+&lt;p>first thing i do is i try to collect as much information as possible from the
+given code. by looking at &lt;code>output.txt&lt;/code> you can see that most of the lines are
+of length 79. while there are two lines that differs from the rest, they have
+the length of 80.&lt;/p></description></item><item><title>First post</title><link>/blog/first-post/</link><category>misc</category><pubDate>Tue, 21 Dec 2021 12:00:00 +0000</pubDate><author>youssef @[redacted] &amp;> /dev/null</author><guid>/blog/first-post/</guid><description>&lt;p>Hi.&lt;/p>
 &lt;p>let&amp;rsquo;s talk about the website. i probably know what you are thinking
 about, &amp;ldquo;This website is ugly, looks like the websites from the 90s?&amp;rdquo;.&lt;/p>
 &lt;p>this website is designed to be minimal without sacrificing basic

