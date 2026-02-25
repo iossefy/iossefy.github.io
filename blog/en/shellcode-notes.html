@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>Shellcode 101: The notes i wish existed when i started learning shellcode</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Roboto Bold:ital,wght@0,400;0,600;1,400;1,600&amp;family=iosevka term slab:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Iossefy"/><meta property="og:title" content="Shellcode 101: The notes i wish existed when i started learning shellcode"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Shellcode 101: The notes i wish existed when i started learning shellcode"/><meta name="twitter:description" content="I have faith of who ever reading this article is not a layman, you are probably familiar with CTFs, overflowed the buffer and smashed the stack once, and knowing what you are getting your self into."/><meta property="og:description" content="I have faith of who ever reading this article is not a layman, you are probably familiar with CTFs, overflowed the buffer and smashed the stack once, and knowing what you are getting your self into."/><meta property="og:image:alt" content="I have faith of who ever reading this article is not a layman, you are probably familiar with CTFs, overflowed the buffer and smashed the stack once, and knowing what you are getting your self into."/><meta property="og:image" content="https://iossefy.github.io/static/og-image.png"/><meta property="og:image:url" content="https://iossefy.github.io/static/og-image.png"/><meta name="twitter:image" content="https://iossefy.github.io/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="iossefy.github.io"/><meta property="og:url" content="https://iossefy.github.io/blog/en/shellcode-notes"/><meta property="twitter:url" content="https://iossefy.github.io/blog/en/shellcode-notes"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="I have faith of who ever reading this article is not a layman, you are probably familiar with CTFs, overflowed the buffer and smashed the stack once, and knowing what you are getting your self into."/><link href="../../index.css" rel="stylesheet" type="text/css" data-persist="true"/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiL2hvbWUveW91c3NlZi9EZXYvV2ViL3lvdXNzZWZ5L3F1YXJ0ei9xdWFydHovY29tcG9uZW50cy9zdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><script src="../../prescript.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://iossefy.github.io/index.xml"/></head><body data-slug="blog/en/shellcode-notes"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h1 class="page-title"><a href="../..">Iossefy</a></h1><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="open" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>{}&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Links</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-10" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul><ul class="explorer-ul"><li><a href="/about.html" target="_self">About me</a></li><li><a href="https://github.com/iossefy" target="_blank" rel="noopener noreferrer">Github</a></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><div class="spacer mobile-only"></div><h1 class="article-title">Shellcode 101: The notes i wish existed when i started learning shellcode</h1><p show-comma="true" class="content-meta"><time datetime="2025-09-28T09:00:00.000Z">Sep 28, 2025</time><span>11 min read</span></p><ul class="tags"><li><a href="../../tags/ctf.html" class="internal tag-link">ctf</a></li><li><a href="../../tags/shellcode.html" class="internal tag-link">shellcode</a></li></ul></div></div><article class="popover-hint"><p>I have faith of who ever reading this article is not a layman, you are probably
+familiar with CTFs, overflowed the buffer and smashed the stack once, and
+knowing what you are getting your self into. I assume you know what a CTF challenge is, x86 assembly basics, and using linux.</p>
+<p>The term “shellcode” originates from the common objective of an exploit usually
+to execute a command shell <code>/bin/sh</code>. the code is written in an assembly
+language.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">#execve(&quot;/bin/bash&quot;,{NULL},{NULL})</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">.text</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">.global</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> _start</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">_start:</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0x68732f6e69622f</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rsp</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rdi</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    xor</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> eax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">eax</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> al</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">59</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rsp</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rdx</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rsp</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rsi</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    syscall</span></span></code></pre></figure>
+<p>Looking at his code for a first time is intimidating, and scary. but once you
+learn how to read it, writing the shellcode would be the easiest part of the job.</p>
+<h1 id="how-does-it-execute">How does it execute<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#how-does-it-execute" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>shellcode is simply <em>executable bytes</em>, it is a machine instructions assembled
+to perform a small task once control is hijacked.</p>
+<p>In today’s computers, there are two architectures, <strong>Von Neumann</strong>, which sees
+and stores code as data. And Harvard architectures that stores data and code
+separately.</p>
+<p>almost all general purpose architectures (x86, ARM, MIPS, etc..) are Von
+Neumann. That would be the focus of this article.</p>
+<p>Starting out, we will use a simple shellcode loader to test and execute our
+shellcode.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="c" data-theme="github-light github-dark"><code data-language="c" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">#include</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> &lt;stdio.h></span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">#include</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> &lt;sys/mman.h></span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">#include</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> &lt;unistd.h></span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"> // for read()</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">int</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;"> main</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">) {</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    // 1. Allocate an executable memory page.</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    //    PROT_READ | PROT_WRITE | PROT_EXEC: The memory can be read, written to, and executed.</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    //    MAP_PRIVATE | MAP_ANON: The mapping is private to this process and not backed by a file.</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">page </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;"> mmap</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">NULL</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">4096</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, PROT_READ </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">|</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> PROT_WRITE </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">|</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> PROT_EXEC, MAP_PRIVATE </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">|</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> MAP_ANON, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">);</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (page </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">==</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> MAP_FAILED) {</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">        perror</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;mmap failed&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">);</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">        return</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">;</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    }</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">    printf</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;[+] Memory allocated at: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">%p\n</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, page);</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    // 2. Read shellcode from standard input (stdin) into the allocated page.</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">    printf</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;[+] Reading shellcode from stdin...</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">\n</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">);</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    ssize_t</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> bytes_read </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;"> read</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(STDIN_FILENO, page, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">4095</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">);</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (bytes_read </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">&lt;=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">) {</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">        perror</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;read failed or no input provided&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">);</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">        return</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">;</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    }</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">    printf</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;[+] Read </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">%ld</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> bytes. Executing now...</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">\n</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, bytes_read);</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    // 3. Create a function pointer to the page and call it.</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    //    This transfers execution to the shellcode.</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    void</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">shellcode_func)() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> page;</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">    shellcode_func</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">();</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    // This line will likely not be reached if the shellcode exits.</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    return</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">;</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">}</span></span></code></pre></figure>
+<p>Shellcode is just bytes. If you want to execute it, those bytes must live in
+memory marked as executable.</p>
+<p>the <code>mmap</code> call is important, if we requested a memory without <code>PROT_EXEC</code> The
+moment the program tried to execute the code at page, the CPU’s memory
+management unit would see the “No-Execute” permission on that memory page and
+trigger a protection fault, resulting in a <code>SIGSEGV</code>.</p>
+<p>We are asking for a single page (0x1000 bytes) of memory that is</p>
+<ol>
+<li><strong>Writable</strong>: we load shellcode bytes into it using <code>read</code></li>
+<li><strong>Executable</strong>: the CPU will happily <code>jmp</code> into it without complaining.</li>
+</ol>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="c" data-theme="github-light github-dark"><code data-language="c" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">page </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;"> mmap</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    NULL</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                // Let the kernel choose the address</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    4096</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                // One page = 4096 bytes (common page size)</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    PROT_READ </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">|</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> PROT_WRITE </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">|</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> PROT_EXEC,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"> // Permissions: read, write, execute</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    MAP_PRIVATE </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">|</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> MAP_ANON,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"> // Private mapping, not backed by a file</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    -</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                  // File descriptor (-1 since it's anonymous)</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    0</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                    // Offset (not used here)</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">);</span></span></code></pre></figure>
+<p>The code is not compiled using the default <code>gcc</code> configuration, by default,
+modern compilers have protection against shellcode, you need to disable when
+compiling the program.</p>
+<pre><code>gcc -ggdb -g3 execute.c -fno-stack-protector -z execstack -no-pie -fno-pie -o execute
+</code></pre>
+<p>Using checksec, we see the <code>Stack: Executable</code>. That means that the data on the
+stack could be treated as code.</p>
+<pre>$ pwn checksec --file=execute
+[*] '/tmp/test/execute'
+    Arch:       amd64-64-little
+    RELRO:      Full RELRO
+    Stack:      No canary found
+    NX:         NX unknown - GNU_STACK missing
+    PIE:        No PIE (0x400000)
+    Stack:      Executable
+    RWX:        Has RWX segments
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
+    Debuginfo:  Yes
+</pre>
+<h1 id="writing-shellcode">Writing Shellcode<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#writing-shellcode" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Before i start to write shellcode, i open loads documentation, syscall tables,
+and the manual for whatever assembly architecture i am writing. To mention a
+few, I use the <a href="https://syscalls.mebeim.net/?table=x86/64/x64/latest" class="external">Systrack: Linux kernel syscall
+tables<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> for system calls
+lookups. And <a href="https://www.felixcloutier.com/x86/" class="external">felix cloutier’s x86 and amd64 instruction
+reference<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>, It’s easier to navigate, but the
+offical intel manual also works.</p>
+<p>When writing shellcode, your goal is to execute Syscalls. Syscalls = system calls.
+They’re the special functions your program uses to talk to the kernel.</p>
+<ul>
+<li><code>read</code> to ask kernel to read from a file.</li>
+<li><code>write</code> to ask kernel to write to a file.</li>
+<li><code>execve</code> to ask the kernel to run another program.</li>
+<li><code>exit</code> to tell kernel you’re done and exit cleanly.</li>
+</ul>
+<p>Syscalls are functions, like any other functions, the take parameters. It is not
+as easy as <code>function(arg1, arg2, arg3)</code>, but you learn to do it.</p>
+<p>Call convention for <strong>x86</strong> and <strong>x86_64</strong> architechtures:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>ARCH</th><th>RETURN</th><th>ARG0</th><th>ARG1</th><th>ARG2</th><th>ARG3</th><th>ARG4</th><th>ARG5</th></tr></thead><tbody><tr><td>x86</td><td>eax</td><td>ebx</td><td>ecx</td><td>edx</td><td>esi</td><td>edi</td><td>ebp</td></tr><tr><td>x64</td><td>rax</td><td>rdi</td><td>rsi</td><td>rdx</td><td>r10</td><td>r8</td><td>r9</td></tr></tbody></table></div>
+<p>To execute shellcode, You lookup the syscall number you want, the simplist
+example is <code>exit()</code> syscall, looking it up in a <code>man</code> <a href="https://www.man7.org/linux/man-pages/man3/exit.3.html" class="external">page<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> you find this
+definition</p>
+<pre><code>exit - cause normal process termination
+
+#include &lt;stdlib.h>
+
+[[noreturn]] void exit(int status);
+</code></pre>
+<p>It takes only one parameter, exit status. On unix-like systems, a successful
+exit is <code>exit(0)</code>, so lets write that in shellcode. Never mind the first 3
+lines, they are important for the compiler not for us for this case.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">.intel_syntax noprefix</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">.global</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> _start</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">_start:</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">60</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">      # syscall for exit</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    syscall</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">          # execute the shellcode</span></span></code></pre></figure>
+<p>Compile the shellcode using the following.</p>
+<pre><code>gcc -nostdlib -static hello.S -o hello.elf
+</code></pre>
+<p>This will create an <code>elf</code> file, inspect it and see the disassembly code.
+<code>objdump</code>.</p>
+<pre><code>$ objdump -d -Mintel hello.elf
+
+hello.elf:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000401000 &lt;_start>:
+  401000:   48 c7 c0 3c 00 00 00   mov    rax,0x3c
+  401007:   0f 05                  syscall
+</code></pre>
+<p>We only want the <code>.text</code> section of the <code>elf</code> file. to extract it use <code>objdump</code></p>
+<pre><code>objcopy --dump-section .text=hello.bin hello.elf
+</code></pre>
+<p>Use <code>xxd</code> to get compiled code</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="perl" data-theme="github-light github-dark"><code data-language="perl" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">$ xxd hello.bin</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">00000000: 48c7 c078 0000 00bb 0200 0000 4831 db6a  H..x........H1.j</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">00000010: 785f                                     x_</span></span></code></pre></figure>
+<p>You can run the <code>elf</code> file just like any other linux program. it exits with
+status <code>0</code>, to check the status echo <code>$?</code>.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">./hello.elf</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">echo</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> $?</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># 0</span></span></code></pre></figure>
+<p>For more logging use <code>strace</code> to see the <code>syscall</code>s get executed.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">strace</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> ./hello.elf</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># execve(&quot;./hello.elf&quot;, [&quot;./hello.elf&quot;], 0x7ffe3fbd8560 /* 73 vars */) = 0</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># exit(0)                                 = ?</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># +++ exited with 0 +++</span></span></code></pre></figure>
+<p>Now enough with long introduction, Lets get into the notes.</p>
+<h1 id="problems-you-would-run-into-when-writing-shellcode">Problems you would run into when writing shellcode<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#problems-you-would-run-into-when-writing-shellcode" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Here are some of the common problems that you will run into eventually when you
+are writing shellcode.</p>
+<h2 id="size-constraints-byte-budget-hell">Size constraints (Byte budget hell)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#size-constraints-byte-budget-hell" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Your goal is to use the smallest number of bytes as possible.</p>
+<h3 id="xor-instruction">XOR Instruction<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#xor-instruction" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Be careful of using <code>mov</code> too much. To zero out a register, do not use the
+instruction <code>mov</code>. Use <code>xor</code> instead.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    al</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0x0</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">       ; b0 00</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    ax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0x0</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">       ; 66 b8 00 00</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    eax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0x0</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">      ; b8 00 00 00 00</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    rax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0x0</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">      ; 48 c7 c0 00 00 00 00</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">xor</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    al</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">al</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        ; 30 c0</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">xor</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    ax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">ax</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        ; 66 31 c0</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">xor</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    eax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">eax</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">      ; 31 c0</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">xor</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    rax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">rax</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">      ; 48 31 c0</span></span></code></pre></figure>
+<h3 id="push-pop">Push Pop<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#push-pop" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><code>push</code> something to the stack, and get it back by using <code>pop</code></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">;; 7 bytes</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0xbadc0de</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">      ; 48 c7 c0 de c0 ad 0b</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">;; 6 bytes</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">   0xbadc0de</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        ; 68 de c0 ad 0b</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    rax</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">              ; 58</span></span></code></pre></figure>
+<h3 id="use-what-you-have">Use what you have<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#use-what-you-have" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>When you hijack the control flow of the code (e.g <code>jmp rax</code>) you may already
+have some values stored at the registers. for example, when using the <code>read</code>
+syscall, and <code>rdx</code> has a non-zero value. Use it as it is as the parameter
+<code>count</code>. It is a sitiuation dependent but you get the point.</p>
+<h2 id="strings">Strings<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#strings" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>If you think strings are hard in C, well let me introduce you to <em>x86_64</em>.</p>
+<p>I will use <code>open</code> syscall as an example.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># open(&quot;/flag&quot;, O_RDONLY)</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rbx</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0x67616c662f</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">           # push /flag filename</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rbx</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">2</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                      # open() syscall</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rdi</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">rsp</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                    # point to first item on stack (&quot;/flag&quot;)</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rsi</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                      # NULL the second arg (O_RDONLY)</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">syscall</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                         # open(&quot;/flag&quot;, NULL)</span></span></code></pre></figure>
+<p>This <code>0x67616c662f</code> is <code>/flag</code>. it’s in little endian. to reproduce it you have
+to run the following command.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">echo</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> -ne</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> &quot;/flag&quot;</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> |</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;"> rev</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> |</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;"> xxd</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> -p</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># 67616c662f</span></span></code></pre></figure>
+<p>The down side is you will struggle with long
+strings as it may not fit in the registers. One other way using labels, I prefer this way but it may not always work.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># open(&quot;/flag&quot;, O_RDONLY)</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 2</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">             # open syscall = 2</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">lea</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rdi</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, [</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">rip</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">+flag]    </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"> # flag string</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">xor</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rsi</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">rsi</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        # O_RDONLY = 0</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">syscall</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">flag:</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  .string &quot;/flag&quot;</span></span></code></pre></figure>
+<p>There is also building the string on the stack. almost always work, but it
+requires lots of work.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># open(&quot;/flag&quot;, O_RDONLY)</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># push &quot;flag&quot; little endian to stack</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0x67616C66</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">  rax</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                        # rax = 0x0000000067616C66</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># shift left 8 bits to make room for the '/' byte</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">shl</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">  rax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">8</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                     # rax = 0x00000067616C6600</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># load '/' (0x2F) into rbx using push/pop</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0x2F</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">  rbx</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                        # rbx = 0x...0000002F</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># OR the '/' into the low byte</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">or</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">   rax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">rbx</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                   # rax = 0x00000067616C662F</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># push the 64-bit qword (stack gets &quot;/flag\0\0\0&quot; in little-endian)</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 2</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                          # open syscall</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">lea</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rdi</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, [</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">rsp</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">]                 </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"> # filename = &quot;/flag&quot;</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">xor</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rsi</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">rsi</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                    # mode_t = O_RDONLY</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">syscall</span></span></code></pre></figure>
+<h2 id="input-filtering">Input filtering<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#input-filtering" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Input maybe manipulated, filtered of some bytes before execution.</p>
+<h3 id="string-termination--x00ull--bytes">String termination &amp; <code>\x00</code>ull  bytes<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#string-termination--x00ull--bytes" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>One great resource i found is
+<a href="https://nets.ec/Shellcode/Null-free" class="external">nets.ec/Shellcode/Null-free<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> which has
+many great examples.</p>
+<ol>
+<li>Use <a href="#xor-instruction" class="internal alias">xor instruction</a> instead of <code>mov</code></li>
+</ol>
+<p>This will use less bytes and not include null bytes.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># bad</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># good</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">xor</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">rax</span></span></code></pre></figure>
+<ol start="2">
+<li>Use <a href="#push-pop" class="internal alias">push and pop</a> instructions instead of <code>mov</code></li>
+</ol>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0x70</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">syscall</span></span></code></pre></figure>
+<ol start="3">
+<li>Use shifting instructions</li>
+</ol>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">mov</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">     rdi</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0x68732f6e69622f6a</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">   ; move the 64-bit immediate into RDI ('hs/nib/j' in little-endian)</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">shr</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">     rdi</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">8</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                    ; logical right-shift RDI by 8 bits -> zero-terminates the low byte</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    rdi</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                       ; push the 64-bit value (now contains &quot;/bin/sh\0&quot; when viewed as bytes)</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">    rsp</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                       ; push current RSP (stack pointer)</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">     rdi</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                       ; pop that value into RDI -> RDI points at the pushed string</span></span></code></pre></figure>
+<h3 id="self-modifying-shellcode">Self modifying shellcode<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#self-modifying-shellcode" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>One time i was solving a ctf challenge, and it filters the <code>syscall</code> bytes
+<code>0F 05</code>. I wrote a shellcode that constructs the <code>syscall</code> bytes <code>0F 05</code> at
+runtime so it won’t be filtered. The following code increments the <code>0e</code> by 1, so
+it becomes <code>0F</code> and this way it bypasses the filter.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">inc</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> BYTE</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> PTR [</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">rip</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">]</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">.</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">byte</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0x0e</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0x05</span></span></code></pre></figure>
+<h3 id="nop-padding">NOP Padding<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#nop-padding" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><code>nop</code> is an instruction that does nothing, sometimes you use it for padding,
+aligning or whatever reason, it is useful.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">.global</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> _start</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">_start:</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    # Your code here</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    nop</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    nop</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    #...</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">    nop</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    .fill </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">10</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0x90</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    # 10 NOP instructions</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    # or</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    .rept </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">10</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">        nop</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    .endr</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    # More code here</span></span></code></pre></figure>
+<h2 id="multi-stage-shellcode">Multi stage shellcode<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#multi-stage-shellcode" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Some times there will be input filtering that it is impossible to write
+shellcode to do anything meaningful. One way to solve this problem is a multi
+stage shellcode. Write a stage 1 shellcode “Loader” that its job is to load
+another shellcode. Only the stage 1 gets filtered.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="asm" data-theme="github-light github-dark"><code data-language="asm" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rax</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">         # read syscall</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rdi</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">         # stdin</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rsp</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rsi</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">         # rsi = rsp (buffer)</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">push</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 100</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">pop</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rdx</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">syscall</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">jmp</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> rsp</span></span></code></pre></figure>
+<h1 id="use-pwntools-when-possible">Use Pwntools when possible<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#use-pwntools-when-possible" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>it has lots of functions that automates and eases the process of writing
+shellcode. sometimes you don’t need to write shellcode at all, it does it for
+you. But first you have to understand how the <em>magic</em> works, if not you will
+waste a lot of time. <a href="https://docs.pwntools.com/en/stable/shellcraft.html" class="external">RTFM<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>.</p>
+<h2 id="pwn-shellcraft">Pwn shellcraft<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pwn-shellcraft" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">pwn</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> shellcraft</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> -l</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"> #List shellcodes</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">pwn</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> shellcraft</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> -l</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> amd</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"> #Shellcode with amd in the name</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">pwn</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> shellcraft</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> -f</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> hex</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> amd64.linux.sh</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"> #Create in C and run</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">pwn</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> shellcraft</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> -r</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> amd64.linux.sh</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"> #Run to test. Get shell</span></span></code></pre></figure>
+<h2 id="pwn-template">Pwn template<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pwn-template" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>i like to use <code>pwn template</code> command to generate a starting point for my
+challenges.</p>
+<p>then use the <code>asm(&quot;&quot;)</code> function to write the shellcode instead of compiling and
+passing it by hand through the shell.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">stage1 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> asm(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;&quot;&quot;# shellcode loader&quot;&quot;&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">)</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">stage2 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> asm(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;&quot;&quot;# actual shellcode&quot;&quot;&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">)</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">io.sendline(stage1)</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">pause(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">)</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">io.sendline(stage2)</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">io.interactive()</span></span></code></pre></figure>
+<h2 id="gdb-debugger">GDB Debugger<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#gdb-debugger" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Using a debugger is essential. <code>gdb</code> is good but it lacks features, that is why i
+recommend using <code>pwndbg</code> or <code>gef</code> with it. they help with visualisation and
+provide functions that are useful for debugging.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">gdbscript </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> f</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">'''</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"># break points</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">#...</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">source /opt/gef/gef.py</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">continue</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">'''</span></span></code></pre></figure>
+<h1 id="references">References<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#references" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<ul>
+<li><a href="https://shell-storm.org/shellcode/index.html" class="external">https://shell-storm.org/shellcode/index.html<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://pwn.college/program-security/program-security/" class="external">https://pwn.college/program-security/program-security/<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://www.felixcloutier.com/x86/" class="external">https://www.felixcloutier.com/x86/<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://syscalls.mebeim.net/?table=x86/64/x64/latest" class="external">https://syscalls.mebeim.net/?table=x86/64/x64/latest<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://www.abatchy.com/2017/04/shellcode-reduction-tips-x86" class="external">https://www.abatchy.com/2017/04/shellcode-reduction-tips-x86<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://nets.ec/Shellcode/Null-free" class="external">https://nets.ec/Shellcode/Null-free<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://book.hacktricks.wiki/en/binary-exploitation/basic-stack-binary-exploitation-methodology/tools/pwntools.html" class="external">https://book.hacktricks.wiki/en/binary-exploitation/basic-stack-binary-exploitation-methodology/tools/pwntools.html<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+</ul></article><div class="page-footer"><hr class="cat-divider "/><div class="article-meta-card"><div class="amc-watermark" aria-hidden="true">CC</div><p class="amc-title">Shellcode 101: The notes i wish existed when i started learning shellcode</p><a class="amc-url" href="/blog/en/shellcode-notes.html" target="_blank" rel="noopener noreferrer">iossefy.github.io/blog/en/shellcode-notes.html</a><div class="amc-meta"><div class="amc-meta-item"><label>Author</label><span>Iossefy</span></div><div class="amc-meta-item"><label>Published at</label><span><time datetime="2025-09-28T09:00:00.000Z">Sep 28, 2025</time></span></div><div class="amc-meta-item"><label>License</label><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div></div></div></div></div><div class="right sidebar"></div><footer class><p>© 2026 Youssef Hesham</p><ul></ul></footer></div></div></body><script type="application/javascript" data-persist="true">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module" data-persist="true">function E(a,e){if(!a)return;function t(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function n(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}a?.addEventListener("click",t),window.addCleanup(()=>a?.removeEventListener("click",t)),document.addEventListener("keydown",n),window.addCleanup(()=>document.removeEventListener("keydown",n))}function f(a){for(;a.firstChild;)a.removeChild(a.firstChild)}var m=class{constructor(e,t){this.container=e;this.content=t;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),t=this.onMouseMove.bind(this),n=this.onMouseUp.bind(this),o=this.onTouchStart.bind(this),r=this.onTouchMove.bind(this),i=this.onTouchEnd.bind(this),s=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",t),document.addEventListener("mouseup",n),this.container.addEventListener("touchstart",o,{passive:!1}),document.addEventListener("touchmove",r,{passive:!1}),document.addEventListener("touchend",i),window.addEventListener("resize",s),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",t),()=>document.removeEventListener("mouseup",n),()=>this.container.removeEventListener("touchstart",o),()=>document.removeEventListener("touchmove",r),()=>document.removeEventListener("touchend",i),()=>window.removeEventListener("resize",s))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let t=this.createButton("+",()=>this.zoom(.1)),n=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(n),e.appendChild(o),e.appendChild(t),this.container.appendChild(e)}createButton(e,t){let n=document.createElement("button");return n.textContent=e,n.className="mermaid-control-button",n.addEventListener("click",t),window.addCleanup(()=>n.removeEventListener("click",t)),n}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}onTouchStart(e){if(e.touches.length!==1)return;this.isDragging=!0;let t=e.touches[0];this.startPan={x:t.clientX-this.currentPan.x,y:t.clientY-this.currentPan.y}}onTouchMove(e){if(!this.isDragging||e.touches.length!==1)return;e.preventDefault();let t=e.touches[0];this.currentPan={x:t.clientX-this.startPan.x,y:t.clientY-this.startPan.y},this.updateTransform()}onTouchEnd(){this.isDragging=!1}zoom(e){let t=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),n=this.content.getBoundingClientRect(),o=n.width/2,r=n.height/2,i=t-this.scale;this.currentPan.x-=o*i,this.currentPan.y-=r*i,this.scale=t,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){let t=this.content.querySelector("svg").getBoundingClientRect(),n=t.width/this.scale,o=t.height/this.scale;this.scale=1,this.currentPan={x:(this.container.clientWidth-n)/2,y:(this.container.clientHeight-o)/2},this.updateTransform()}},T=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],y;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;y||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let t=y.default,n=new WeakMap;for(let r of e)n.set(r,r.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let c=n.get(s);c&&(s.innerHTML=c)}let r=T.reduce((s,c)=>(s[c]=window.getComputedStyle(document.documentElement).getPropertyValue(c),s),{}),i=document.documentElement.getAttribute("saved-theme")==="dark";t.initialize({startOnLoad:!1,securityLevel:"loose",theme:i?"dark":"base",themeVariables:{fontFamily:r["--codeFont"],primaryColor:r["--light"],primaryTextColor:r["--darkgray"],primaryBorderColor:r["--tertiary"],lineColor:r["--darkgray"],secondaryColor:r["--secondary"],tertiaryColor:r["--tertiary"],clusterBkg:r["--light"],edgeLabelBackground:r["--highlight"]}}),await t.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let r=0;r<e.length;r++){let v=function(){let g=l.querySelector("#mermaid-space"),h=l.querySelector(".mermaid-content");if(!h)return;f(h);let w=i.querySelector("svg").cloneNode(!0);h.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new m(g,h)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},i=e[r],s=i.parentElement,c=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(c),L=c.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),E(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="../../postscript.js" type="module" data-persist="true"></script></html>
