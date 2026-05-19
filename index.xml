@@ -5,6 +5,12 @@
       <link>https://iossefy.github.io</link>
       <description>Last 10 notes on Iossefy</description>
       <item>
+    <title>[Pwn College] V8 Exploitation</title>
+    <link>https://iossefy.github.io/blog/en/browser/pwn-college-v8-exploitation-part-1</link>
+    <guid>https://iossefy.github.io/blog/en/browser/pwn-college-v8-exploitation-part-1</guid>
+    <description><![CDATA[  This is my notes solving Pwn.College v8 exploitation module. ]]></description>
+    <pubDate>Sun, 12 Apr 2026 18:06:00 GMT</pubDate>
+  </item><item>
     <title>Iossefy</title>
     <link>https://iossefy.github.io/</link>
     <guid>https://iossefy.github.io/</guid>
@@ -58,12 +64,6 @@
     <guid>https://iossefy.github.io/license</guid>
     <description><![CDATA[ CC-BY-NC-SA ]]></description>
     <pubDate>Tue, 28 Dec 2021 22:00:00 GMT</pubDate>
-  </item><item>
-    <title>First post</title>
-    <link>https://iossefy.github.io/blog/en/first-post</link>
-    <guid>https://iossefy.github.io/blog/en/first-post</guid>
-    <description><![CDATA[ Hi. let’s talk about the website. i probably know what you are thinking about, “This website is ugly, looks like the websites from the 90s?”. ]]></description>
-    <pubDate>Tue, 21 Dec 2021 10:00:00 GMT</pubDate>
   </item>
     </channel>
   </rss>

@@ -1,1 +1,1 @@
-alert("AAAAAA "+document.domain);
+alert("AAAAAA " + document.domain)
