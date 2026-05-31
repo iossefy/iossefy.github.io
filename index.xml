@@ -4,66 +4,67 @@
       <title>Iossefy</title>
       <link>https://iossefy.github.io</link>
       <description>Last 10 notes on Iossefy</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>[Pwn College] V8 Exploitation</title>
-    <link>https://iossefy.github.io/blog/en/browser/pwn-college-v8-exploitation-part-1</link>
-    <guid>https://iossefy.github.io/blog/en/browser/pwn-college-v8-exploitation-part-1</guid>
-    <description><![CDATA[  This is my notes solving Pwn.College v8 exploitation module. ]]></description>
-    <pubDate>Sun, 12 Apr 2026 18:06:00 GMT</pubDate>
-  </item><item>
-    <title>Iossefy</title>
-    <link>https://iossefy.github.io/</link>
-    <guid>https://iossefy.github.io/</guid>
-    <description><![CDATA[  My name is iossefy. I ♥ open source. ]]></description>
-    <pubDate>Mon, 23 Feb 2026 17:55:05 GMT</pubDate>
-  </item><item>
-    <title>Posts</title>
-    <link>https://iossefy.github.io/blog/en/</link>
-    <guid>https://iossefy.github.io/blog/en/</guid>
+    <title>blog</title>
+    <link>https://iossefy.github.io/blog/</link>
+    <guid>https://iossefy.github.io/blog/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Mon, 23 Feb 2026 17:29:18 GMT</pubDate>
+    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
   </item><item>
-    <title>Tag: ctf</title>
-    <link>https://iossefy.github.io/tags/ctf</link>
-    <guid>https://iossefy.github.io/tags/ctf</guid>
-    <description><![CDATA[ A collection of CTF writeups documenting attack surfaces, exploitation chains, and defensive insights. ]]></description>
-    <pubDate>Mon, 23 Feb 2026 17:29:18 GMT</pubDate>
+    <title>browser</title>
+    <link>https://iossefy.github.io/blog/en/browser/</link>
+    <guid>https://iossefy.github.io/blog/en/browser/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
   </item><item>
-    <title>Shellcode 101: The notes i wish existed when i started learning shellcode</title>
-    <link>https://iossefy.github.io/blog/en/shellcode-notes</link>
-    <guid>https://iossefy.github.io/blog/en/shellcode-notes</guid>
-    <description><![CDATA[ I have faith of who ever reading this article is not a layman, you are probably familiar with CTFs, overflowed the buffer and smashed the stack once, and knowing what you are getting your self into. ]]></description>
-    <pubDate>Sun, 28 Sep 2025 09:00:00 GMT</pubDate>
+    <title>writeup</title>
+    <link>https://iossefy.github.io/tags/writeup</link>
+    <guid>https://iossefy.github.io/tags/writeup</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
   </item><item>
-    <title>Mirrors</title>
-    <link>https://iossefy.github.io/mirrors</link>
-    <guid>https://iossefy.github.io/mirrors</guid>
-    <description><![CDATA[ mirrors ]]></description>
-    <pubDate>Fri, 02 May 2025 21:00:00 GMT</pubDate>
+    <title>ascwg</title>
+    <link>https://iossefy.github.io/tags/ascwg</link>
+    <guid>https://iossefy.github.io/tags/ascwg</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
   </item><item>
-    <title>Using mitmproxy instead of burpsuite? (exploring a blind sqli portswigger lab)</title>
-    <link>https://iossefy.github.io/blog/en/mitmproxy-burpsuite</link>
-    <guid>https://iossefy.github.io/blog/en/mitmproxy-burpsuite</guid>
-    <description><![CDATA[ PortSwigger made a powerful tool burpsuite for performing security testing of web applications. ]]></description>
-    <pubDate>Tue, 23 Aug 2022 23:00:00 GMT</pubDate>
+    <title>v8</title>
+    <link>https://iossefy.github.io/tags/v8</link>
+    <guid>https://iossefy.github.io/tags/v8</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
   </item><item>
-    <title>Arab Security Cyber WarGames 2022</title>
-    <link>https://iossefy.github.io/blog/en/ascwg-2022</link>
-    <guid>https://iossefy.github.io/blog/en/ascwg-2022</guid>
-    <description><![CDATA[ OSP Challenge Have you heard of OTP? This is OSP (One Secret Password). given an osp.py that contains the following block of code. ]]></description>
-    <pubDate>Mon, 08 Aug 2022 10:00:00 GMT</pubDate>
+    <title>pwn.college</title>
+    <link>https://iossefy.github.io/tags/pwn.college</link>
+    <guid>https://iossefy.github.io/tags/pwn.college</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
   </item><item>
-    <title>About me</title>
-    <link>https://iossefy.github.io/about</link>
-    <guid>https://iossefy.github.io/about</guid>
-    <description><![CDATA[ About me ]]></description>
-    <pubDate>Tue, 28 Dec 2021 22:00:00 GMT</pubDate>
+    <title>browser-exploitation</title>
+    <link>https://iossefy.github.io/tags/browser-exploitation</link>
+    <guid>https://iossefy.github.io/tags/browser-exploitation</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
   </item><item>
-    <title>license</title>
-    <link>https://iossefy.github.io/license</link>
-    <guid>https://iossefy.github.io/license</guid>
-    <description><![CDATA[ CC-BY-NC-SA ]]></description>
-    <pubDate>Tue, 28 Dec 2021 22:00:00 GMT</pubDate>
+    <title>pwn</title>
+    <link>https://iossefy.github.io/tags/pwn</link>
+    <guid>https://iossefy.github.io/tags/pwn</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
+  </item><item>
+    <title>misc</title>
+    <link>https://iossefy.github.io/tags/misc</link>
+    <guid>https://iossefy.github.io/tags/misc</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
+  </item><item>
+    <title>mitmproxy</title>
+    <link>https://iossefy.github.io/tags/mitmproxy</link>
+    <guid>https://iossefy.github.io/tags/mitmproxy</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
   </item>
     </channel>
   </rss>

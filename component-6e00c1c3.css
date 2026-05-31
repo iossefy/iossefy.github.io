@@ -1,0 +1,1 @@
+@layer quartz-base{hr.cat-divider{background-color:var(--gray);opacity:.4;border:none;width:100%;height:5rem;margin:0 auto;-webkit-mask:url(/static/cat.svg) 50% no-repeat;mask:url(/static/cat.svg) 50% no-repeat}}
