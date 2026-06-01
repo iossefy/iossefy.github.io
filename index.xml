@@ -6,65 +6,65 @@
       <description>Last 10 notes on Iossefy</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>MyWebsite</title>
+    <link>https://iossefy.github.io/mywebsite/</link>
+    <guid>https://iossefy.github.io/mywebsite/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Mon, 01 Jun 2026 16:49:21 GMT</pubDate>
+  </item><item>
     <title>blog</title>
     <link>https://iossefy.github.io/blog/</link>
     <guid>https://iossefy.github.io/blog/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
+    <pubDate>Mon, 01 Jun 2026 16:49:21 GMT</pubDate>
   </item><item>
     <title>browser</title>
     <link>https://iossefy.github.io/blog/en/browser/</link>
     <guid>https://iossefy.github.io/blog/en/browser/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
+    <pubDate>Mon, 01 Jun 2026 16:49:21 GMT</pubDate>
+  </item><item>
+    <title>malware</title>
+    <link>https://iossefy.github.io/malware/</link>
+    <guid>https://iossefy.github.io/malware/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Mon, 01 Jun 2026 16:49:21 GMT</pubDate>
   </item><item>
     <title>writeup</title>
     <link>https://iossefy.github.io/tags/writeup</link>
     <guid>https://iossefy.github.io/tags/writeup</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
+    <pubDate>Mon, 01 Jun 2026 16:49:21 GMT</pubDate>
   </item><item>
     <title>ascwg</title>
     <link>https://iossefy.github.io/tags/ascwg</link>
     <guid>https://iossefy.github.io/tags/ascwg</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
+    <pubDate>Mon, 01 Jun 2026 16:49:21 GMT</pubDate>
   </item><item>
     <title>v8</title>
     <link>https://iossefy.github.io/tags/v8</link>
     <guid>https://iossefy.github.io/tags/v8</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
+    <pubDate>Mon, 01 Jun 2026 16:49:21 GMT</pubDate>
   </item><item>
     <title>pwn.college</title>
     <link>https://iossefy.github.io/tags/pwn.college</link>
     <guid>https://iossefy.github.io/tags/pwn.college</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
+    <pubDate>Mon, 01 Jun 2026 16:49:21 GMT</pubDate>
   </item><item>
     <title>browser-exploitation</title>
     <link>https://iossefy.github.io/tags/browser-exploitation</link>
     <guid>https://iossefy.github.io/tags/browser-exploitation</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
+    <pubDate>Mon, 01 Jun 2026 16:49:21 GMT</pubDate>
   </item><item>
     <title>pwn</title>
     <link>https://iossefy.github.io/tags/pwn</link>
     <guid>https://iossefy.github.io/tags/pwn</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
-  </item><item>
-    <title>misc</title>
-    <link>https://iossefy.github.io/tags/misc</link>
-    <guid>https://iossefy.github.io/tags/misc</guid>
-    <description><![CDATA[  ]]></description>
-    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
-  </item><item>
-    <title>mitmproxy</title>
-    <link>https://iossefy.github.io/tags/mitmproxy</link>
-    <guid>https://iossefy.github.io/tags/mitmproxy</guid>
-    <description><![CDATA[  ]]></description>
-    <pubDate>Sun, 31 May 2026 08:59:57 GMT</pubDate>
+    <pubDate>Mon, 01 Jun 2026 16:49:21 GMT</pubDate>
   </item>
     </channel>
   </rss>
