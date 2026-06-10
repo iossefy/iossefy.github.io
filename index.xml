@@ -6,65 +6,65 @@
       <description>Last 10 notes on Iossefy</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>blog</title>
-    <link>https://iossefy.github.io/blog/index.html</link>
-    <guid>https://iossefy.github.io/blog/index.html</guid>
-    <description><![CDATA[  ]]></description>
-    <pubDate>Wed, 10 Jun 2026 17:45:23 GMT</pubDate>
-  </item><item>
-    <title>browser</title>
-    <link>https://iossefy.github.io/blog/en/browser/index.html</link>
-    <guid>https://iossefy.github.io/blog/en/browser/index.html</guid>
-    <description><![CDATA[  ]]></description>
-    <pubDate>Wed, 10 Jun 2026 17:45:23 GMT</pubDate>
-  </item><item>
-    <title>malware</title>
-    <link>https://iossefy.github.io/malware/index.html</link>
-    <guid>https://iossefy.github.io/malware/index.html</guid>
-    <description><![CDATA[  ]]></description>
-    <pubDate>Wed, 10 Jun 2026 17:45:23 GMT</pubDate>
-  </item><item>
-    <title>threat</title>
-    <link>https://iossefy.github.io/threat/index.html</link>
-    <guid>https://iossefy.github.io/threat/index.html</guid>
-    <description><![CDATA[  ]]></description>
-    <pubDate>Wed, 10 Jun 2026 17:45:23 GMT</pubDate>
-  </item><item>
-    <title>writeup</title>
-    <link>https://iossefy.github.io/tags/writeup.html</link>
-    <guid>https://iossefy.github.io/tags/writeup.html</guid>
-    <description><![CDATA[  ]]></description>
-    <pubDate>Wed, 10 Jun 2026 17:45:23 GMT</pubDate>
-  </item><item>
-    <title>ascwg</title>
-    <link>https://iossefy.github.io/tags/ascwg.html</link>
-    <guid>https://iossefy.github.io/tags/ascwg.html</guid>
-    <description><![CDATA[  ]]></description>
-    <pubDate>Wed, 10 Jun 2026 17:45:23 GMT</pubDate>
-  </item><item>
-    <title>v8</title>
-    <link>https://iossefy.github.io/tags/v8.html</link>
-    <guid>https://iossefy.github.io/tags/v8.html</guid>
-    <description><![CDATA[  ]]></description>
-    <pubDate>Wed, 10 Jun 2026 17:45:23 GMT</pubDate>
-  </item><item>
-    <title>pwn.college</title>
-    <link>https://iossefy.github.io/tags/pwn.college</link>
-    <guid>https://iossefy.github.io/tags/pwn.college</guid>
-    <description><![CDATA[  ]]></description>
-    <pubDate>Wed, 10 Jun 2026 17:45:23 GMT</pubDate>
-  </item><item>
-    <title>browser-exploitation</title>
-    <link>https://iossefy.github.io/tags/browser-exploitation.html</link>
-    <guid>https://iossefy.github.io/tags/browser-exploitation.html</guid>
-    <description><![CDATA[  ]]></description>
-    <pubDate>Wed, 10 Jun 2026 17:45:23 GMT</pubDate>
-  </item><item>
     <title>pwn</title>
     <link>https://iossefy.github.io/tags/pwn.html</link>
     <guid>https://iossefy.github.io/tags/pwn.html</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Wed, 10 Jun 2026 17:45:23 GMT</pubDate>
+    <pubDate>Wed, 10 Jun 2026 21:14:10 GMT</pubDate>
+  </item><item>
+    <title>misc</title>
+    <link>https://iossefy.github.io/tags/misc.html</link>
+    <guid>https://iossefy.github.io/tags/misc.html</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Wed, 10 Jun 2026 21:14:10 GMT</pubDate>
+  </item><item>
+    <title>mitmproxy</title>
+    <link>https://iossefy.github.io/tags/mitmproxy.html</link>
+    <guid>https://iossefy.github.io/tags/mitmproxy.html</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Wed, 10 Jun 2026 21:14:10 GMT</pubDate>
+  </item><item>
+    <title>burpsuite</title>
+    <link>https://iossefy.github.io/tags/burpsuite.html</link>
+    <guid>https://iossefy.github.io/tags/burpsuite.html</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Wed, 10 Jun 2026 21:14:10 GMT</pubDate>
+  </item><item>
+    <title>portswigger</title>
+    <link>https://iossefy.github.io/tags/portswigger.html</link>
+    <guid>https://iossefy.github.io/tags/portswigger.html</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Wed, 10 Jun 2026 21:14:10 GMT</pubDate>
+  </item><item>
+    <title>blind-sql-injection</title>
+    <link>https://iossefy.github.io/tags/blind-sql-injection.html</link>
+    <guid>https://iossefy.github.io/tags/blind-sql-injection.html</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Wed, 10 Jun 2026 21:14:10 GMT</pubDate>
+  </item><item>
+    <title>shellcode</title>
+    <link>https://iossefy.github.io/tags/shellcode.html</link>
+    <guid>https://iossefy.github.io/tags/shellcode.html</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Wed, 10 Jun 2026 21:14:10 GMT</pubDate>
+  </item><item>
+    <title>malware-analysis</title>
+    <link>https://iossefy.github.io/tags/malware-analysis.html</link>
+    <guid>https://iossefy.github.io/tags/malware-analysis.html</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Wed, 10 Jun 2026 21:14:10 GMT</pubDate>
+  </item><item>
+    <title>remcosrat</title>
+    <link>https://iossefy.github.io/tags/remcosrat.html</link>
+    <guid>https://iossefy.github.io/tags/remcosrat.html</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Wed, 10 Jun 2026 21:14:10 GMT</pubDate>
+  </item><item>
+    <title>threat-actor</title>
+    <link>https://iossefy.github.io/tags/threat-actor.html</link>
+    <guid>https://iossefy.github.io/tags/threat-actor.html</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Wed, 10 Jun 2026 21:14:10 GMT</pubDate>
   </item>
     </channel>
   </rss>
