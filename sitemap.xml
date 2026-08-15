@@ -1,79 +1,79 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
-    <loc>https://iossefy.github.io/blog/en/first-post.html</loc>
+    <loc>https://iossefy.github.io/blog/en/first-post</loc>
     <lastmod>2021-12-21T10:00:00.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/blog/en/index.html</loc>
+    <loc>https://iossefy.github.io/blog/en/</loc>
     <lastmod>2026-05-30T18:32:23.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/blog/en/mitmproxy-burpsuite.html</loc>
+    <loc>https://iossefy.github.io/blog/en/mitmproxy-burpsuite</loc>
     <lastmod>2022-08-23T23:00:00.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/blog/en/shellcode-notes.html</loc>
+    <loc>https://iossefy.github.io/blog/en/shellcode-notes</loc>
     <lastmod>2025-09-28T09:00:00.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/ctf/ascwg-2022.html</loc>
+    <loc>https://iossefy.github.io/ctf/ascwg-2022</loc>
     <lastmod>2022-08-08T10:00:00.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/ctf/pwn-college-v8-exploitation-part-1.html</loc>
+    <loc>https://iossefy.github.io/ctf/pwn-college-v8-exploitation-part-1</loc>
     <lastmod>2026-04-12T18:06:00.000Z</lastmod>
   </url><url>
     <loc>https://iossefy.github.io/</loc>
     <lastmod>2026-05-30T18:32:23.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/malware/kimsuky-lnk-pdf.html</loc>
+    <loc>https://iossefy.github.io/malware/kimsuky-lnk-pdf</loc>
     <lastmod>2026-07-23T21:00:00.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/malware/remcosrat-js-dropper.html</loc>
+    <loc>https://iossefy.github.io/malware/remcosrat-js-dropper</loc>
     <lastmod>2026-06-01T12:20:00.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/malware/remus-stealer.html</loc>
+    <loc>https://iossefy.github.io/malware/remus-stealer</loc>
     <lastmod>2026-06-17T18:00:00.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/tags/ctf.html</loc>
+    <loc>https://iossefy.github.io/tags/ctf</loc>
     <lastmod>2026-05-30T18:32:23.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/tags/malware-analysis.html</loc>
+    <loc>https://iossefy.github.io/tags/malware-analysis</loc>
     <lastmod>2026-07-07T12:16:32.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/threat/teampcp.html</loc>
+    <loc>https://iossefy.github.io/threat/teampcp</loc>
     <lastmod>2026-06-11T00:00:00.000Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/blog/index.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/blog/</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/ctf/index.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/ctf/</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/malware/index.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/malware/</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/threat/index.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/threat/</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/tags/misc.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/tags/misc</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/tags/web-security.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/tags/web-security</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/tags/sql-injection.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/tags/sql-injection</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/tags/shellcode.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/tags/shellcode</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/tags/browser-exploitation.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/tags/browser-exploitation</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/tags/pwn.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/tags/pwn</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/tags/threat-actor.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/tags/threat-actor</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/tags/supply-chain.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/tags/supply-chain</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url><url>
-    <loc>https://iossefy.github.io/tags/index.html</loc>
-    <lastmod>2026-08-15T20:06:31.752Z</lastmod>
+    <loc>https://iossefy.github.io/tags/</loc>
+    <lastmod>2026-08-15T20:24:42.876Z</lastmod>
   </url></urlset>
